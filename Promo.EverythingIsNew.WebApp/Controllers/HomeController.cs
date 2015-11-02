@@ -39,18 +39,27 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             }
         }
 
-        public async Task<ActionResult> VkResult(string code)
+        public async Task<ActionResult> VkResult(string code, string error)
         {
             VkEvents.Log.GetCodeFinished(code);
             try
             {
-                EntryForm userProfile = Helpers.MapToEntryForm(
-                    await VkClient.GetUserData(code, MvcApplication.VkAppId, MvcApplication.VkAppSecretKey, MvcApplication.RedirectUri));
+            if (!string.IsNullOrEmpty(code))
+            {
+                EntryForm userProfile = Helpers.MapToEntryForm(await VkClient.GetUserData(
+                    code, MvcApplication.VkAppId, MvcApplication.VkAppSecretKey, MvcApplication.RedirectUri));
                 Helpers.EncodeToCookies(userProfile, this.ControllerContext);
                 return RedirectToAction("Index");
             }
+            }
+            else
+            {
+                return Redirect(MvcApplication.PersonalBeelineUrl);
+            }
             catch (Exception e)
             {
+            
+            
                 VkEvents.Log.GeneralError(e);
                 throw;
             }
