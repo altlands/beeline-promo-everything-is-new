@@ -48,24 +48,54 @@
                     </div>
                 </div>
 
-                <div class="form-line">
+                <div class="form-line" style="float:left;">
                     <label for="birthday_field">Дата рождения</label>
-                    <div class="field">
+                    <table>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>777</td>
+                        </tr>
+                    </table>
+                    @*<div class="field">
                         @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "inp" } })
+                    </div>*@
+                    <div class="field" style="width:100px">
+                        <div class="text-select text-select-day" style="width:100px;float:left;">
+                            <div class="inp option-selected option-selected-day" style="width:28px !important;float:left;">2</div>
+                            <input type="hidden" name="day" id="day" value="2" style="width:100px" />
+                            <div class="text-select-list text-select-list-day" style="display:block;width:100px">
+                                @foreach (int day in Enumerable.Range(1,31))
+                                {
+                                    <div class="option option-day" style="width:100px">@day</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field" style="float:left;" >
+                        <div class="text-select text-select-month" style="width:100px;float:left;">
+                            <div class="inp option-selected option-selected-month" style="width:28px !important;float:left;">3</div>
+                            <input type="hidden" name="month" id="month" value="3" />
+                            <div class="text-select-list text-select-list-month" style="display:block">
+                                @foreach (int month in Enumerable.Range(1, 12))
+                                {
+                                    <div class="option option-month" style="width:100px">@month</div>
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br>
                 <div class="form-line">
                     <label for="place_field">Город</label>
                     <div class="field">
-                        <div class="text-select">
-                            <div class="inp option-selected">@ViewBag.SelectedCity</div>
+                        <div class="text-select text-select-city">
+                            <div class="inp option-selected option-selected-city">@ViewBag.SelectedCity</div>
                             <input type="hidden" name="SelectMyCity" id="SelectMyCity" value="@ViewBag.SelectedCity" />
-                            @*@Html.EditorFor(model => model.SelectMyCity, new { htmlAttributes = new { @class = "inp" } })*@
-                            <div class="text-select-list" style="display:block">
+                            <div class="text-select-list text-select-list-city" style="display:block">
                                 @foreach (string city in ViewBag.Cities)
                                 {
-                                    <div class="option">@city</div>
+                                    <div class="option option-city">@city</div>
                                 }
                                 @*<div class="option" alias="Питер,СПБ">Санкт-Петербург</div>*@
                             </div>
@@ -102,33 +132,88 @@
 
 <script>
     $(function () {
-        var dropdown = $(".text-select-list");
-        var options = $('.option');
-        var selected = $('.option-selected');
+        var dropdown_city = $(".text-select-list-city");
+        var options_city = $('.option-city');
+        var selected_city = $('.option-selected-city');
         var hidden = $('#SelectMyCity');
 
-        options.hide();
-        dropdown.hide();
-        selected.show();
+        options_city.hide();
+        dropdown_city.hide();
+        selected_city.show();
 
-        selected.click(function () {
-            dropdown.show();
-            options.show();
+        selected_city.click(function () {
+            dropdown_city.show();
+            options_city.show();
         });
 
-        options.click(function () {
+        options_city.click(function () {
             var innerHtml = $(this).html();
-            dropdown.hide();
-            selected.html(innerHtml);
+            dropdown_city.hide();
+            selected_city.html(innerHtml);
             hidden.val(innerHtml);
         });
 
         $(document).mouseup(function (e) {
-            if (!dropdown.is(e.target)
-                && dropdown.has(e.target).length === 0) {
-                dropdown.hide();
+            if (!dropdown_city.is(e.target)
+                && dropdown_city.has(e.target).length === 0) {
+                dropdown_city.hide();
+            }
+
+            if (!dropdown_day.is(e.target)
+                && dropdown_day.has(e.target).length === 0) {
+                dropdown_day.hide();
+            }
+
+            if (!dropdown_month.is(e.target)
+                && dropdown_month.has(e.target).length === 0) {
+                dropdown_month.hide();
             }
         });
+
+
+        var dropdown_day = $(".text-select-list-day");
+        var options_day = $('.option-day');
+        var selected_day = $('.option-selected-day');
+        var hidden_day = $('#day');
+
+        options_day.hide();
+        dropdown_day.hide();
+        selected_day.show();
+
+        selected_day.click(function () {
+            dropdown_day.show();
+            options_day.show();
+        });
+
+        options_day.click(function () {
+            var innerHtml = $(this).html();
+            dropdown_day.hide();
+            selected_day.html(innerHtml);
+            hidden.val(innerHtml);
+        });
+
+        var dropdown_month = $(".text-select-list-month");
+        var options_month = $('.option-month');
+        var selected_month = $('.option-selected-month');
+        var hidden_month = $('#month');
+
+        options_month.hide();
+        dropdown_month.hide();
+        selected_month.show();
+
+        selected_month.click(function () {
+            dropdown_month.show();
+            options_month.show();
+        });
+
+        options_month.click(function () {
+            var innerHtml = $(this).html();
+            dropdown_month.hide();
+            selected_month.html(innerHtml);
+            hidden.val(innerHtml);
+        });
+
+
 
         $("#form-index").validate({
             rules: {
@@ -143,7 +228,6 @@
                 }
             },
             messages: {
-
                 CTN: {
                     required: "",
                     minlength: "",
