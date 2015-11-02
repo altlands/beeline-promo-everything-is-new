@@ -1,7 +1,7 @@
 ﻿@model Promo.EverythingIsNew.Domain.EntryForm
 <div class="header">
     <div class="header-wrap">
-        <h1>Александр!</h1>
+        <h1>@Model.FirstName!</h1>
         С &laquo;Билайн&raquo; можно всё!<br>
         Получите персональный тариф с бесплатными Мбайтами,<br>
         минутами и СМС по специальному промо-коду.
@@ -50,40 +50,51 @@
 
                 <div class="form-line" style="float:left;">
                     <label for="birthday_field">Дата рождения</label>
-                    <table>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>777</td>
-                        </tr>
-                    </table>
-                    @*<div class="field">
-                        @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "inp" } })
-                    </div>*@
                     <div class="field" style="width:100px">
-                        <div class="text-select text-select-day" style="width:100px;float:left;">
-                            <div class="inp option-selected option-selected-day" style="width:28px !important;float:left;">2</div>
-                            <input type="hidden" name="day" id="day" value="2" style="width:100px" />
-                            <div class="text-select-list text-select-list-day" style="display:block;width:100px">
-                                @foreach (int day in Enumerable.Range(1,31))
-                                {
-                                    <div class="option option-day" style="width:100px">@day</div>
-                                }
-                            </div>
-                        </div>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="text-select text-select-day" style="width:100px;float:left;">
+                                        <div class="inp option-selected option-selected-day" style="width:28px !important;float:left;">2</div>
+                                        <input type="hidden" name="day" id="day" value="2" style="width:100px" />
+                                        <div class="text-select-list text-select-list-day" style="display:block;width:100px;height: 300px;overflow-y: scroll;">
+                                            @foreach (int day in Enumerable.Range(1, 31))
+                                            {
+                                                <div class="option option-day" style="width:100px">@day</div>
+                                            }
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-select text-select-month" style="width:100px;float:left;">
+                                        <div class="inp option-selected option-selected-month" style="width:28px !important;float:left;">3</div>
+                                        <input type="hidden" name="month" id="month" value="3" />
+                                        <div class="text-select-list text-select-list-month" style="display:block;height: 300px;overflow-y: scroll;">
+                                            @foreach (int month in Enumerable.Range(1, 12))
+                                            {
+                                                <div class="option option-month" style="width:100px">@month</div>
+                                            }
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-select text-select-year" style="width:100px;float:left;">
+                                        <div class="inp option-selected option-selected-year" style="width:28px !important;float:left;">2000</div>
+                                        <input type="hidden" name="year" id="year" value="3" />
+                                        <div class="text-select-list text-select-list-year" style="display:block;height: 300px;overflow-y: scroll;">
+                                            @foreach (int year in Enumerable.Range(1950, 2005))
+                                            {
+                                                <div class="option option-year" style="width:100px">@year</div>
+                                            }
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="field" style="float:left;" >
-                        <div class="text-select text-select-month" style="width:100px;float:left;">
-                            <div class="inp option-selected option-selected-month" style="width:28px !important;float:left;">3</div>
-                            <input type="hidden" name="month" id="month" value="3" />
-                            <div class="text-select-list text-select-list-month" style="display:block">
-                                @foreach (int month in Enumerable.Range(1, 12))
-                                {
-                                    <div class="option option-month" style="width:100px">@month</div>
-                                }
-                            </div>
-                        </div>
-                    </div>
+                    @*<div class="field">
+                            @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "inp" } })
+                        </div>*@
                 </div>
                 <br>
                 <div class="form-line">
@@ -92,7 +103,7 @@
                         <div class="text-select text-select-city">
                             <div class="inp option-selected option-selected-city">@ViewBag.SelectedCity</div>
                             <input type="hidden" name="SelectMyCity" id="SelectMyCity" value="@ViewBag.SelectedCity" />
-                            <div class="text-select-list text-select-list-city" style="display:block">
+                            <div class="text-select-list text-select-list-city" style="display:block;height: 300px;overflow-y: scroll;">
                                 @foreach (string city in ViewBag.Cities)
                                 {
                                     <div class="option option-city">@city</div>
@@ -132,6 +143,8 @@
 
 <script>
     $(function () {
+        $('.text-select').scrollbar();
+
         var dropdown_city = $(".text-select-list-city");
         var options_city = $('.option-city');
         var selected_city = $('.option-selected-city');
@@ -167,6 +180,11 @@
             if (!dropdown_month.is(e.target)
                 && dropdown_month.has(e.target).length === 0) {
                 dropdown_month.hide();
+            }
+
+            if (!dropdown_year.is(e.target)
+                && dropdown_year.has(e.target).length === 0) {
+                dropdown_year.hide();
             }
         });
 
@@ -213,6 +231,27 @@
             hidden.val(innerHtml);
         });
 
+        var dropdown_year = $(".text-select-list-year");
+        var options_year = $('.option-year');
+        var selected_year = $('.option-selected-year');
+        var hidden_year = $('#year');
+
+        options_year.hide();
+        dropdown_year.hide();
+        selected_year.show();
+
+        selected_year.click(function () {
+            dropdown_year.show();
+            options_year.show();
+        });
+
+        options_year.click(function () {
+            var innerHtml = $(this).html();
+            dropdown_year.hide();
+            selected_year.html(innerHtml);
+            hidden.val(innerHtml);
+        });
+
 
 
         $("#form-index").validate({
@@ -232,7 +271,7 @@
                     required: "",
                     minlength: "",
                     maxlength: "",
-                    digits:"",
+                    digits: "",
                 },
                 Email: {
                     email: "",
