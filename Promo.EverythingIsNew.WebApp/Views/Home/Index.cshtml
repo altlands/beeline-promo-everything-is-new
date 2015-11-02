@@ -54,10 +54,10 @@
                         <table>
                             <tr>
                                 <td>
-                                    <div class="text-select text-select-day" style="width:100px;float:left;">
-                                        <div class="inp option-selected option-selected-day" style="width:28px !important;float:left;">2</div>
+                                    <div class="text-select text-select-day" style="width:100px;">
+                                        <div class="inp option-selected option-selected-day" style="width:28px !important;">2</div>
                                         <input type="hidden" name="day" id="day" value="2" style="width:100px" />
-                                        <div class="text-select-list text-select-list-day" style="display:block;width:100px;height: 300px;overflow-y: scroll;">
+                                        <div class="text-select-list text-select-list-day" style="display:block;width:100px;">
                                             @foreach (int day in Enumerable.Range(1, 31))
                                             {
                                                 <div class="option option-day" style="width:100px">@day</div>
@@ -67,9 +67,9 @@
                                 </td>
                                 <td>
                                     <div class="text-select text-select-month" style="width:100px;float:left;">
-                                        <div class="inp option-selected option-selected-month" style="width:28px !important;float:left;">3</div>
+                                        <div class="inp option-selected option-selected-month" style="width:28px !important;">3</div>
                                         <input type="hidden" name="month" id="month" value="3" />
-                                        <div class="text-select-list text-select-list-month" style="display:block;height: 300px;overflow-y: scroll;">
+                                        <div class="text-select-list text-select-list-month" style="display:block;">
                                             @foreach (int month in Enumerable.Range(1, 12))
                                             {
                                                 <div class="option option-month" style="width:100px">@month</div>
@@ -79,10 +79,10 @@
                                 </td>
                                 <td>
                                     <div class="text-select text-select-year" style="width:100px;float:left;">
-                                        <div class="inp option-selected option-selected-year" style="width:28px !important;float:left;">2000</div>
+                                        <div class="inp option-selected option-selected-year" style="width:28px !important;">2000</div>
                                         <input type="hidden" name="year" id="year" value="3" />
-                                        <div class="text-select-list text-select-list-year" style="display:block;height: 300px;overflow-y: scroll;">
-                                            @foreach (int year in Enumerable.Range(1950, 2005))
+                                        <div class="text-select-list text-select-list-year" style="display:block;">
+                                            @foreach (int year in Enumerable.Range(1950, 50))
                                             {
                                                 <div class="option option-year" style="width:100px">@year</div>
                                             }
@@ -103,7 +103,7 @@
                         <div class="text-select text-select-city">
                             <div class="inp option-selected option-selected-city">@ViewBag.SelectedCity</div>
                             <input type="hidden" name="SelectMyCity" id="SelectMyCity" value="@ViewBag.SelectedCity" />
-                            <div class="text-select-list text-select-list-city" style="display:block;height: 300px;overflow-y: scroll;">
+                            <div class="text-select-list text-select-list-city" style="display:block">
                                 @foreach (string city in ViewBag.Cities)
                                 {
                                     <div class="option option-city">@city</div>
@@ -143,8 +143,6 @@
 
 <script>
     $(function () {
-        $('.text-select').scrollbar();
-
         var dropdown_city = $(".text-select-list-city");
         var options_city = $('.option-city');
         var selected_city = $('.option-selected-city');

@@ -268,7 +268,6 @@
     <Content Include="i\triangle.png" />
     <Content Include="i\vk-icon.png" />
     <Content Include="js\jquery-1.10.2.min.js" />
-    <Content Include="js\jquery.scrollbar.min.js" />
     <Content Include="js\jquery.validate.min.js" />
     <Content Include="js\script.js" />
     <Content Include="PrivateSettings.config" />
