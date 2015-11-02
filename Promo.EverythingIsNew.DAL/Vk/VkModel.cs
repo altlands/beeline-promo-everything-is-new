@@ -27,6 +27,10 @@ namespace Promo.EverythingIsNew.DAL.Vk
         [JsonProperty("mobile_phone")]
         public string Phone { get; set; }
 
+        public Response()
+        {
+            City = new City();
+        }
     }
 
     public class City
