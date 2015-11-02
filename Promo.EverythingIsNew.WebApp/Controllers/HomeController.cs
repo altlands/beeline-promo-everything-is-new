@@ -100,6 +100,11 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
                 return Redirect(MvcApplication.PersonalBeelineUrl);
             }
 
+            if (userProfile.SelectMyCity == "Другой регион")
+            {
+                return Redirect(MvcApplication.PersonalBeelineUrl);
+            }
+
             Helpers.EncodeToCookies(userProfile, this.ControllerContext);
             return RedirectToAction("Offer");
         }
