@@ -69,7 +69,10 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
         {
             var userProfile = Helpers.DecodeFromCookies(this.ControllerContext);
 
-            if (userProfile.Birthday != null && !Helpers.IsAgeAllowed(userProfile.Birthday ?? new DateTime()))
+            // if birthsday year is not provided  it is necessary to compare with the current year
+            if (userProfile.Birthday != null && 
+                userProfile.Birthday.Value.Year != DateTime.Now.Year && 
+                !Helpers.IsAgeAllowed(userProfile.Birthday ?? new DateTime()))
             {
                 return Redirect(MvcApplication.PersonalBeelineUrl);
             }
