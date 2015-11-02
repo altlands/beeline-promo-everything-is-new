@@ -76,7 +76,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
 
             var cities = Helpers.GetCities();
             ViewBag.Cities = cities;
-            ViewBag.SelectedCity = cities.FirstOrDefault(x => x == userProfile.SelectMyCity);
+            ViewBag.SelectedCity = cities.FirstOrDefault(x => x == userProfile.SelectMyCity) ?? cities[0];
             return View(userProfile);
         }
 
