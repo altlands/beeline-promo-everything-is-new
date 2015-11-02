@@ -148,5 +148,17 @@ namespace Promo.EverythingIsNew.WebApp.Models
                         select s.Soc;
             return items.FirstOrDefault();
         }
+
+        public static bool IsAgeAllowed(DateTime birthday)
+        {
+
+            if (birthday.AddYears(MvcApplication.MinimumAge) <= DateTime.Now &&
+                birthday.AddYears(MvcApplication.MaximumAge) >= DateTime.Now)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

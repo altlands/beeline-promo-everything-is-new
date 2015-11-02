@@ -28,6 +28,8 @@ namespace Promo.EverythingIsNew.WebApp
         public static string Hostname = ConfigurationManager.AppSettings["RedirectHostname"];
         public static string RedirectUri = Hostname + (Hostname.Substring(Hostname.Length - 1, 1) == "/" ? "VkResult" : "/VkResult");
         public static string PersonalBeelineUrl = ConfigurationManager.AppSettings["PersonalBeelineUrl"];
+        public static int MinimumAge = int.Parse(ConfigurationManager.AppSettings["MinimumAge"]);
+        public static int MaximumAge = int.Parse(ConfigurationManager.AppSettings["MaximumAge"]);
 
         public static string CbnUrl = ConfigurationManager.AppSettings["CbnUrl"];
         public static string CbnUser = ConfigurationManager.AppSettings["CbnUser"];

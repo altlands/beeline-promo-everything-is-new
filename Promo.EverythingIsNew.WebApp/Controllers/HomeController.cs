@@ -59,6 +59,12 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
         public ActionResult Index()
         {
             var userProfile = Helpers.DecodeFromCookies(this.ControllerContext);
+
+            if (userProfile.Birthday != null && !Helpers.IsAgeAllowed(userProfile.Birthday ?? new DateTime()))
+            {
+                return Redirect(MvcApplication.PersonalBeelineUrl);
+            }
+
             var cities = Helpers.GetCities();
             ViewBag.Cities = cities;
             ViewBag.SelectedCity = cities.FirstOrDefault(x => x == userProfile.SelectMyCity);
@@ -78,6 +84,12 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             // return index page if ModelState is not valid
 
             // post to cbn api status and redirect if account is already used or if 
+
+            // check age
+            if (!Helpers.IsAgeAllowed(userProfile.Birthday ?? new DateTime()))
+            {
+                return Redirect(MvcApplication.PersonalBeelineUrl);
+            }
 
             Helpers.EncodeToCookies(userProfile, this.ControllerContext);
             return RedirectToAction("Offer");
