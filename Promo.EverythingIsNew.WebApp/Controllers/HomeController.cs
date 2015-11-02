@@ -104,6 +104,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             return RedirectToAction("Offer");
         }
 
+        
         public async Task<ActionResult> Offer()
         {
             var userProfile = Helpers.DecodeFromCookies(this.ControllerContext);

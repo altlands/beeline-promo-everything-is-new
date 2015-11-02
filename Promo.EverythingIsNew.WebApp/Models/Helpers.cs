@@ -136,8 +136,8 @@ namespace Promo.EverythingIsNew.WebApp.Models
         internal static string GetMarketCodeFromCity(string city)
         {
             var items = from TariffIndexElement s in MvcApplication.TariffIndexes
-                             where s.City == city
-                             select s.MarketCode;
+                        where s.City == city
+                        select s.MarketCode;
             return items.FirstOrDefault();
         }
 

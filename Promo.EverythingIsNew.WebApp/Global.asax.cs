@@ -38,7 +38,6 @@ namespace Promo.EverythingIsNew.WebApp
         public static CbnClient CbnClient = new CbnClient(CbnUrl, CbnUser, CbnPassword);
 
         public static string Soc = ConfigurationManager.AppSettings["Soc"];
-        public static string _siteUrlFormat = ConfigurationManager.AppSettings["altlands:dpc:site-url"];
         public static string dcpConnectionString = ConfigurationManager.AppSettings["DcpConnectionString"];
 
         public static TariffIndexesCollection TariffIndexes =
