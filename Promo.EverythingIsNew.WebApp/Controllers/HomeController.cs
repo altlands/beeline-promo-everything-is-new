@@ -1,8 +1,10 @@
 ﻿using AltLanDS.Beeline.DpcProxy.Client;
 using Newtonsoft.Json;
+using Promo.EverythingIsNew.DAL.Events;
 using Promo.EverythingIsNew.DAL.Vk;
 using Promo.EverythingIsNew.Domain;
 using Promo.EverythingIsNew.WebApp.Models;
+using System;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,16 +24,36 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
 
         public async Task<ActionResult> Vk()
         {
-            var urlToGetCode = VkHelpers.GetCodeUrl(MvcApplication.VkAppId, MvcApplication.RedirectUri);
-            return Redirect(urlToGetCode);
+            string urlToGetCode = null;
+
+            try
+            {
+                VkEvents.Log.GetCodeStarted(MvcApplication.VkAppId, MvcApplication.RedirectUri);
+                urlToGetCode = VkHelpers.GetCodeUrl(MvcApplication.VkAppId, MvcApplication.RedirectUri);
+                return Redirect(urlToGetCode);
+            }
+            catch (Exception e)
+            {
+                VkEvents.Log.GeneralExceptionError(urlToGetCode, e);
+                throw;
+            }
         }
 
         public async Task<ActionResult> VkResult(string code)
         {
-            EntryForm userProfile = Helpers.MapToEntryForm(
-                await VkClient.GetUserData(code, MvcApplication.VkAppId, MvcApplication.VkAppSecretKey, MvcApplication.RedirectUri));
-            Helpers.EncodeToCookies(userProfile, this.ControllerContext);
-            return RedirectToAction("Index");
+            VkEvents.Log.GetCodeFinished(code);
+            try
+            {
+                EntryForm userProfile = Helpers.MapToEntryForm(
+                    await VkClient.GetUserData(code, MvcApplication.VkAppId, MvcApplication.VkAppSecretKey, MvcApplication.RedirectUri));
+                Helpers.EncodeToCookies(userProfile, this.ControllerContext);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                VkEvents.Log.GeneralError(e);
+                throw;
+            }
         }
 
         public ActionResult Index()

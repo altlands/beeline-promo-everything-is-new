@@ -1,7 +1,9 @@
 ﻿using Promo.EverythingIsNew.DAL.Cbn.Dto;
+using Promo.EverythingIsNew.DAL.Events;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,41 +30,75 @@ namespace Promo.EverythingIsNew.DAL.Cbn
             var byteArray = Encoding.ASCII.GetBytes(UsssUser + ":" + UsssPassword);
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
         }
-        
+
         public async Task<StatusResult> GetStatus(Status status)
         {
-            var request = String.Format("status?ctn={0}&uid={1}", status.ctn, status.uid);
-            HttpResponseMessage response = await client.GetAsync(request);
-            if (response.IsSuccessStatusCode)
+            CbnEvents.Log.CbnGetStatusStarted(status);
+            string request = null;
+            var response = new HttpResponseMessage();
+
+            try
             {
-                var result = await response.Content.ReadAsAsync<StatusResult>();
-                return result;
+                request = String.Format("status?ctn={0}&uid={1}", status.ctn, status.uid);
+                response = await client.GetAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<StatusResult>();
+                    CbnEvents.Log.CbnGetStatusFinished(result);
+                    return result;
+                }
             }
-            new CbnException(response.ToString());
+            catch
+            {
+                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response.ToString()));
+                throw;
+            }
             return null;
         }
 
         public async Task<MessageResult> PostMessage(Message message)
         {
-            HttpResponseMessage response = await client.PostAsJsonAsync("message", message);
-            if (response.IsSuccessStatusCode)
+            CbnEvents.Log.CbnPostMessageStarted(message);
+            var response = new HttpResponseMessage();
+
+            try
             {
-                var result = await response.Content.ReadAsAsync<MessageResult>();
-                return result;
+                response = await client.PostAsJsonAsync("message", message);
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<MessageResult>();
+                    CbnEvents.Log.CbnPostMessageFinished(result);
+                    return result;
+                }
             }
-            new CbnException(response.ToString());
+            catch
+            {
+                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response.ToString()));
+                throw;
+            }
             return null;
         }
 
         public async Task<UpdateResult> Update(Update update)
         {
-            HttpResponseMessage response = await client.PostAsJsonAsync("update", update);
-            if (response.IsSuccessStatusCode)
+            CbnEvents.Log.CbnUpdateStarted(update);
+            var response = new HttpResponseMessage();
+
+            try
             {
-                var result = await response.Content.ReadAsAsync<UpdateResult>();
-                return result;
+                response = await client.PostAsJsonAsync("update", update);
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<UpdateResult>();
+                    CbnEvents.Log.CbnUpdateFinished(result);
+                    return result;
+                }
             }
-            new CbnException(response.ToString());
+            catch
+            {
+                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response.ToString()));
+                throw;
+            }
             return null;
         }
     }

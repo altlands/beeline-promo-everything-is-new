@@ -1,5 +1,4 @@
-﻿using AltLanDS.Logging;
-using FullScale180.SemanticLogging;
+﻿using FullScale180.SemanticLogging;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using Promo.EverythingIsNew.DAL;
 using Promo.EverythingIsNew.DAL.Cbn;
@@ -14,6 +13,11 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Microsoft.Practices.Unity;
+using AltLanDS.Logging;
+using AltLanDS.Framework;
+using Promo.EverythingIsNew.DAL.Events;
+using System.Reflection;
 
 namespace Promo.EverythingIsNew.WebApp
 {
@@ -40,10 +44,21 @@ namespace Promo.EverythingIsNew.WebApp
 
         protected void Application_Start()
         {
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            AltLanDS.Framework.Application.Current.Start();
+
+            var vkObservable = new ObservableEventListener();
+            vkObservable.EnableEvents(VkEvents.LogEventSource, EventLevel.Verbose, (EventKeywords)(-1));
+            vkObservable.LogToCategory("vk");
+
+            var cbnObservable = new ObservableEventListener();
+            cbnObservable.EnableEvents(CbnEvents.LogEventSource, EventLevel.Verbose, (EventKeywords)(-1));
+            cbnObservable.LogToCategory("cbn");
 
             LogtestEvents();
 

@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Promo.EverythingIsNew.DAL.Events;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Cache;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,16 +25,44 @@ namespace Promo.EverythingIsNew.DAL.Vk
                 client.Encoding = Encoding.UTF8;
                 client.CachePolicy = new RequestCachePolicy(RequestCacheLevel.NoCacheNoStore);
 
-                var urlToGetAccessData = VkHelpers.GetTokenUrl(code, vkAppId, vkAppSecretKey, redirectUri);
-                var accessInfo = client.DownloadString(urlToGetAccessData);
-                accessData = JsonConvert.DeserializeObject<AccessData>(accessInfo);
+                string urlToGetAccessData = null;
+                string urlToGetInfo = null;
 
-                var urlToGetInfo = VkHelpers.UserApiUrl(accessData);
-                var userInfo = client.DownloadString(urlToGetInfo);
-                userData = JsonConvert.DeserializeObject<VkModel>(userInfo, new IsoDateTimeConverter { Culture = new CultureInfo("ru-RU") });
+                try
+                {
+                    VkEvents.Log.GetAccessDataStarted(code, vkAppId, vkAppSecretKey, redirectUri);
+
+                    urlToGetAccessData = VkHelpers.GetTokenUrl(code, vkAppId, vkAppSecretKey, redirectUri);
+                    var accessInfo = client.DownloadString(urlToGetAccessData);
+                    accessData = JsonConvert.DeserializeObject<AccessData>(accessInfo);
+
+                    VkEvents.Log.GetAccessDataFinished(accessData);
+                }
+                catch (Exception e)
+                {
+                    VkEvents.Log.GeneralExceptionError(urlToGetAccessData, e);
+                    throw;
+                }
+
+                try
+                {
+                    VkEvents.Log.GetUserDataStarted(accessData);
+
+                    urlToGetInfo = VkHelpers.UserApiUrl(accessData);
+                    var userInfo = client.DownloadString(urlToGetInfo);
+                    userData = JsonConvert.DeserializeObject<VkModel>(userInfo, new IsoDateTimeConverter { Culture = new CultureInfo("ru-RU") });
+                    userData.Response.FirstOrDefault().Email = accessData.Email;
+
+                    VkEvents.Log.GetUserDataFinished(userData);
+                    return userData;
+                }
+                catch (Exception e)
+                {
+                    VkEvents.Log.GeneralExceptionError(urlToGetInfo, e);
+                    throw;
+                }
             }
-            userData.Response.FirstOrDefault().Email = accessData.Email;
-            return userData;
+
         }
     }
 }
