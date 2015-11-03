@@ -1,5 +1,7 @@
 ﻿using AltLanDS.Beeline.DpcProxy.Client;
 using Newtonsoft.Json;
+using Promo.EverythingIsNew.DAL.Cbn;
+using Promo.EverythingIsNew.DAL.Cbn.Dto;
 using Promo.EverythingIsNew.DAL.Events;
 using Promo.EverythingIsNew.DAL.Vk;
 using Promo.EverythingIsNew.Domain;
@@ -142,5 +144,27 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
                 return new HttpStatusCodeResult(400);
             }
         }
+
+        public async Task<ActionResult> Test()
+        {
+
+            var result = await MvcApplication.CbnClient.Update(new Update
+            {
+                ctn = "777",
+                email = "777",
+                name = "012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789",
+            });
+
+            //var result = await MvcApplication.CbnClient.GetStatus(new Status
+            //{
+            //    ctn = "9653868754",
+            //    uid = "1083308",
+            //});
+
+
+            return Content(JsonConvert.SerializeObject(result));
+        }
+
+
     }
 }

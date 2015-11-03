@@ -93,6 +93,12 @@ namespace Promo.EverythingIsNew.DAL.Cbn
                     CbnEvents.Log.CbnUpdateFinished(result);
                     return result;
                 }
+                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    var result = await response.Content.ReadAsAsync<UpdateResult>();
+                    CbnEvents.Log.CbnUpdateFinished(result);
+                    return result;
+                }
             }
             catch
             {

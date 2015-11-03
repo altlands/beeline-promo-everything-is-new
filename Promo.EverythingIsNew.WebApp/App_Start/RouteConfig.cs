@@ -16,7 +16,7 @@ namespace Promo.EverythingIsNew.WebApp
             routes.MapRoute(
                 name: "choose",
                 url: "choose",
-                defaults: new { controller = "home", action = "Choose"}
+                defaults: new { controller = "home", action = "Choose" }
             );
 
             routes.MapRoute(
@@ -42,6 +42,12 @@ namespace Promo.EverythingIsNew.WebApp
                 name: "vkResult",
                 url: "vkResult",
                 defaults: new { controller = "home", action = "VkResult" }
+            );
+
+            routes.MapRoute(
+                name: "test",
+                url: "test",
+                defaults: new { controller = "home", action = "test" }
             );
 
             routes.MapRoute(
