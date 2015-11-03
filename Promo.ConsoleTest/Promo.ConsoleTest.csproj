@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -51,6 +55,20 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
+    <None Include="PrivateSettings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Promo.EverythingIsNew.DAL\Promo.EverythingIsNew.DAL.csproj">
+      <Project>{e33f332b-92da-480d-a102-cc09a1828d52}</Project>
+      <Name>Promo.EverythingIsNew.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Promo.EverythingIsNew.WebApp\Promo.EverythingIsNew.WebApp.csproj">
+      <Project>{e5ce314c-17aa-4df4-9ac8-9dba2d0c43b5}</Project>
+      <Name>Promo.EverythingIsNew.WebApp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

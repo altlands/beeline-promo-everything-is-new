@@ -11,23 +11,23 @@ namespace Promo.EverythingIsNew.DAL.Cbn
 {
     public class CbnClient
     {
-        private string UsssUrl;
-        private string UsssUser;
-        private string UsssPassword;
+        private string CbnUrl;
+        private string CbnUser;
+        private string CbnPassword;
         private HttpClient client;
 
-        public CbnClient(string usssUrl, string usssUser, string usssPassword)
+        public CbnClient(string cbnUrl, string cbnUser, string cbnPassword)
         {
-            this.UsssUrl = usssUrl;
-            this.UsssUser = usssUser;
-            this.UsssPassword = usssPassword;
+            this.CbnUrl = cbnUrl;
+            this.CbnUser = cbnUser;
+            this.CbnPassword = cbnPassword;
             this.client = new HttpClient();
 
-            client.BaseAddress = new Uri(UsssUrl);
+            client.BaseAddress = new Uri(CbnUrl);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var byteArray = Encoding.ASCII.GetBytes(UsssUser + ":" + UsssPassword);
+            var byteArray = Encoding.ASCII.GetBytes(CbnUser + ":" + CbnPassword);
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
         }
 
