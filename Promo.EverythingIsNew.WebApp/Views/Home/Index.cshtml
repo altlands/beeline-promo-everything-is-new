@@ -82,7 +82,7 @@
                                         <div class="inp option-selected option-selected-year" style="width:28px !important;">7</div>
                                         <input type="hidden" name="year" id="year" value="@Model.Year" />
                                         <div class="text-select-list text-select-list-year" style="display:block;">
-                                            @foreach (int year in Enumerable.Range(1950, DateTime.Now.Year - 1950-12))
+                                            @foreach (int year in Enumerable.Range(1950, DateTime.Now.Year - 1950 - MvcApplication.MinimumAge))
                                             {
                                                 <div class="option option-year" style="width:100px">@year</div>
                                             }
