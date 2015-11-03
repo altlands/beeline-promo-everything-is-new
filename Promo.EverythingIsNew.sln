@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promo.EverythingIsNew.WebApp", "Promo.EverythingIsNew.WebApp\Promo.EverythingIsNew.WebApp.csproj", "{E5CE314C-17AA-4DF4-9AC8-9DBA2D0C43B5}"
 EndProject
@@ -70,5 +70,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{35BA378E-7472-4BFD-A88C-DD5B84C6E5EA} = {8946ABD0-4CFC-485A-A5FA-E89D5A40D5C3}
 		{885131FD-4B3A-4CD6-BC04-3A6F79E3EDD4} = {8946ABD0-4CFC-485A-A5FA-E89D5A40D5C3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.Interception.2.1.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal
