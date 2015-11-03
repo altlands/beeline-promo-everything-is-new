@@ -90,6 +90,8 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             userProfile.Uid = oldUserProfile.Uid;
             userProfile.MarketCode = Helpers.GetMarketCodeFromCity(userProfile.SelectMyCity);
             userProfile.Soc = Helpers.GetSocFromCity(userProfile.SelectMyCity);
+            userProfile.Birthday = new DateTime(userProfile.Year, userProfile.Month, userProfile.Day);
+
 
             // var result = await MvcApplication.CbnClient.Update(Helpers.MapToUpdate(userProfile));
             // Add ModelState validation messages

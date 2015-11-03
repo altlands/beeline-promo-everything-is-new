@@ -55,8 +55,8 @@
                             <tr>
                                 <td>
                                     <div class="text-select text-select-day" style="width:100px;">
-                                        <div class="inp option-selected option-selected-day" style="width:28px !important;">2</div>
-                                        <input type="hidden" name="day" id="day" value="2" style="width:100px" />
+                                        <div class="inp option-selected option-selected-day" style="width:28px !important;">7</div>
+                                        <input type="hidden" name="day" id="day" value="@Model.Day" style="width:100px" />
                                         <div class="text-select-list text-select-list-day" style="display:block;width:100px;">
                                             @foreach (int day in Enumerable.Range(1, 31))
                                             {
@@ -67,8 +67,8 @@
                                 </td>
                                 <td>
                                     <div class="text-select text-select-month" style="width:100px;float:left;">
-                                        <div class="inp option-selected option-selected-month" style="width:28px !important;">3</div>
-                                        <input type="hidden" name="month" id="month" value="3" />
+                                        <div class="inp option-selected option-selected-month" style="width:28px !important;">7</div>
+                                        <input type="hidden" name="month" id="month" value="@Model.Month" />
                                         <div class="text-select-list text-select-list-month" style="display:block;">
                                             @foreach (int month in Enumerable.Range(1, 12))
                                             {
@@ -79,10 +79,10 @@
                                 </td>
                                 <td>
                                     <div class="text-select text-select-year" style="width:100px;float:left;">
-                                        <div class="inp option-selected option-selected-year" style="width:28px !important;">2000</div>
-                                        <input type="hidden" name="year" id="year" value="3" />
+                                        <div class="inp option-selected option-selected-year" style="width:28px !important;">7</div>
+                                        <input type="hidden" name="year" id="year" value="@Model.Year" />
                                         <div class="text-select-list text-select-list-year" style="display:block;">
-                                            @foreach (int year in Enumerable.Range(1950, 50))
+                                            @foreach (int year in Enumerable.Range(1950, DateTime.Now.Year - 1950-12))
                                             {
                                                 <div class="option option-year" style="width:100px">@year</div>
                                             }
@@ -146,7 +146,7 @@
         var dropdown_city = $(".text-select-list-city");
         var options_city = $('.option-city');
         var selected_city = $('.option-selected-city');
-        var hidden = $('#SelectMyCity');
+        var hidden_city = $('#SelectMyCity');
 
         options_city.hide();
         dropdown_city.hide();
@@ -161,7 +161,7 @@
             var innerHtml = $(this).html();
             dropdown_city.hide();
             selected_city.html(innerHtml);
-            hidden.val(innerHtml);
+            hidden_city.val(innerHtml);
         });
 
         $(document).mouseup(function (e) {
@@ -205,7 +205,7 @@
             var innerHtml = $(this).html();
             dropdown_day.hide();
             selected_day.html(innerHtml);
-            hidden.val(innerHtml);
+            hidden_day.val(innerHtml);
         });
 
         var dropdown_month = $(".text-select-list-month");
@@ -226,7 +226,7 @@
             var innerHtml = $(this).html();
             dropdown_month.hide();
             selected_month.html(innerHtml);
-            hidden.val(innerHtml);
+            hidden_month.val(innerHtml);
         });
 
         var dropdown_year = $(".text-select-list-year");
@@ -247,7 +247,7 @@
             var innerHtml = $(this).html();
             dropdown_year.hide();
             selected_year.html(innerHtml);
-            hidden.val(innerHtml);
+            hidden_year.val(innerHtml);
         });
 
 
