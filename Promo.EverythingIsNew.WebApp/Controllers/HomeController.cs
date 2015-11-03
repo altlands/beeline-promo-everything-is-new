@@ -44,22 +44,22 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             VkEvents.Log.GetCodeFinished(code);
             try
             {
-            if (!string.IsNullOrEmpty(code))
-            {
-                EntryForm userProfile = Helpers.MapToEntryForm(await VkClient.GetUserData(
-                    code, MvcApplication.VkAppId, MvcApplication.VkAppSecretKey, MvcApplication.RedirectUri));
-                Helpers.EncodeToCookies(userProfile, this.ControllerContext);
-                return RedirectToAction("Index");
-            }
-            }
-            else
-            {
-                return Redirect(MvcApplication.PersonalBeelineUrl);
+                if (!string.IsNullOrEmpty(code))
+                {
+                    EntryForm userProfile = Helpers.MapToEntryForm(await VkClient.GetUserData(
+                        code, MvcApplication.VkAppId, MvcApplication.VkAppSecretKey, MvcApplication.RedirectUri));
+                    Helpers.EncodeToCookies(userProfile, this.ControllerContext);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return Redirect(MvcApplication.PersonalBeelineUrl);
+                }
             }
             catch (Exception e)
             {
-            
-            
+
+
                 VkEvents.Log.GeneralError(e);
                 throw;
             }
@@ -70,8 +70,8 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             var userProfile = Helpers.DecodeFromCookies(this.ControllerContext);
 
             // if birthsday year is not provided  it is necessary to compare with the current year
-            if (userProfile.Birthday != null && 
-                userProfile.Birthday.Value.Year != DateTime.Now.Year && 
+            if (userProfile.Birthday != null &&
+                userProfile.Birthday.Value.Year != DateTime.Now.Year &&
                 !Helpers.IsAgeAllowed(userProfile.Birthday ?? new DateTime()))
             {
                 return Redirect(MvcApplication.PersonalBeelineUrl);
@@ -114,7 +114,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             return RedirectToAction("Offer");
         }
 
-        
+
         public async Task<ActionResult> Offer()
         {
             var userProfile = Helpers.DecodeFromCookies(this.ControllerContext);
