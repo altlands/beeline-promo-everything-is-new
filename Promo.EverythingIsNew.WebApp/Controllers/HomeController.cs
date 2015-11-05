@@ -78,9 +78,10 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
 
             var cities = Helpers.GetCities();
             ViewBag.Cities = cities;
-            ViewBag.SelectedCity = cities.FirstOrDefault(x => x == userProfile.SelectMyCity) ?? cities[0];
+            ViewBag.SelectedCity = Helpers.CalculateSelectedCity(userProfile, cities);
             return View(userProfile);
         }
+
 
         [HttpPost]
         public async Task<ActionResult> Index(UserProfileViewModel userProfile)
@@ -98,7 +99,8 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             // Add ModelState validation messages
             // return index page if ModelState is not valid
 
-            // post to cbn api status and redirect if account is already used or if 
+            // post to cbn api status 
+            // redirect if account is already used with another CTN 
 
             Helpers.EncodeToCookies(userProfile, this.ControllerContext);
             return result;

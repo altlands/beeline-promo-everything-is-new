@@ -219,5 +219,26 @@ namespace Promo.EverythingIsNew.WebApp.Models
             return result;
         }
 
+        internal static string CalculateSelectedCity(UserProfileViewModel userProfile, System.Collections.Generic.List<string> cities)
+        {
+            string result;
+            if (userProfile.SelectMyCity == null)
+            {
+                result = cities.FirstOrDefault();
+            } 
+            else 
+            {
+                if (cities.FirstOrDefault(x => x == userProfile.SelectMyCity) != null)
+                {
+                    result = cities.FirstOrDefault(x => x == userProfile.SelectMyCity);
+                }
+                else
+                {
+                    result = cities[cities.Count - 1];
+                }
+
+            }
+            return result;
+        }
     }
 }
