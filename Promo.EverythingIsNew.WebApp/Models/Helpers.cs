@@ -133,7 +133,9 @@ namespace Promo.EverythingIsNew.WebApp.Models
             {
                 cities.Add(item.City);
             }
-            return cities.OrderBy(x => x).ToList();
+            cities.OrderBy(x => x).ToList();
+            cities.Add("Другой город");
+            return cities;
         }
 
         internal static string GetMarketCodeFromCity(string city)
