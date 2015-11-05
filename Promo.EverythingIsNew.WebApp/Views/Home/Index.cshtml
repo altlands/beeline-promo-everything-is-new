@@ -55,7 +55,7 @@
                             <tr>
                                 <td>
                                     <div class="text-select text-select-day" style="width:100px;">
-                                        <div class="inp option-selected option-selected-day" style="width:28px !important;">7</div>
+                                        <div class="inp option-selected option-selected-day" style="width:28px !important;">@Model.Day</div>
                                         <input type="hidden" name="day" id="day" value="@Model.Day" style="width:100px" />
                                         <div class="text-select-list text-select-list-day" style="display:block;width:100px;">
                                             @foreach (int day in Enumerable.Range(1, 31))
@@ -67,7 +67,7 @@
                                 </td>
                                 <td>
                                     <div class="text-select text-select-month" style="width:100px;float:left;">
-                                        <div class="inp option-selected option-selected-month" style="width:28px !important;">7</div>
+                                        <div class="inp option-selected option-selected-month" style="width:28px !important;">@Model.Month</div>
                                         <input type="hidden" name="month" id="month" value="@Model.Month" />
                                         <div class="text-select-list text-select-list-month" style="display:block;">
                                             @foreach (int month in Enumerable.Range(1, 12))
@@ -79,10 +79,10 @@
                                 </td>
                                 <td>
                                     <div class="text-select text-select-year" style="width:100px;float:left;">
-                                        <div class="inp option-selected option-selected-year" style="width:28px !important;">7</div>
+                                        <div class="inp option-selected option-selected-year" style="width:28px !important;">@Model.Year</div>
                                         <input type="hidden" name="year" id="year" value="@Model.Year" />
                                         <div class="text-select-list text-select-list-year" style="display:block;">
-                                            @foreach (int year in Enumerable.Range(1950, DateTime.Now.Year - 1950 - MvcApplication.MinimumAge))
+                                            @for (int year = DateTime.Now.Year - 10; year > 1915; year--)
                                             {
                                                 <div class="option option-year" style="width:100px">@year</div>
                                             }
@@ -261,7 +261,8 @@
                     digits: true
                 },
                 Email: {
-                    email: true
+                    email: true,
+                    required: true,
                 }
             },
             messages: {
@@ -273,6 +274,7 @@
                 },
                 Email: {
                     email: "",
+                    required: "",
                 }
             }
         });

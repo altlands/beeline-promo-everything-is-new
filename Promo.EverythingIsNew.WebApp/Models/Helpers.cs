@@ -50,7 +50,7 @@ namespace Promo.EverythingIsNew.WebApp.Models
                     Birthday = x.Birthday,
                     Day = x.Birthday.Day,
                     Month = x.Birthday.Month,
-                    Year = x.Birthday.Year,
+                    Year = x.Birthday.Year == DateTime.Now.Year ? DateTime.Now.Year - 10 : x.Birthday.Year,
                     SelectMyCity = x.City.Title,
                     Email = x.Email,
                     FirstName = x.FirstName,
