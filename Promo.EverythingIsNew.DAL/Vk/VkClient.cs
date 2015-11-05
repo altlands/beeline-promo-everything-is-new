@@ -50,7 +50,14 @@ namespace Promo.EverythingIsNew.DAL.Vk
 
                     urlToGetInfo = VkHelpers.UserApiUrl(accessData);
                     var userInfo = client.DownloadString(urlToGetInfo);
-                    userData = JsonConvert.DeserializeObject<VkModel>(userInfo, new IsoDateTimeConverter { Culture = new CultureInfo("ru-RU") });
+
+                    var birthdayStart = userInfo.IndexOf("bdate\":\"");
+                    var mySubstring = userInfo.Substring(birthdayStart, 15);
+
+
+
+                    var converter = new IsoDateTimeConverter { Culture = new CultureInfo("ru-RU")};
+                    userData = JsonConvert.DeserializeObject<VkModel>(userInfo, converter);
                     userData.Response.FirstOrDefault().Email = accessData.Email;
 
                     VkEvents.Log.GetUserDataFinished(userData);
