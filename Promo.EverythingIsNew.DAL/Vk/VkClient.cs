@@ -52,8 +52,12 @@ namespace Promo.EverythingIsNew.DAL.Vk
                     var userInfo = client.DownloadString(urlToGetInfo);
 
                     var birthdayStart = userInfo.IndexOf("bdate\":\"");
-                    var mySubstring = userInfo.Substring(birthdayStart, 15);
-
+                    var mySubstring = userInfo.Substring(birthdayStart+8, 11);
+                    var endPosition = mySubstring.IndexOf("\"");
+                    if (endPosition < 8)
+                    {
+                        userInfo = userInfo.Insert(birthdayStart + 8 + endPosition, ".2015");
+                    }
 
 
                     var converter = new IsoDateTimeConverter { Culture = new CultureInfo("ru-RU")};
