@@ -30,6 +30,7 @@ namespace Promo.EverythingIsNew.WebApp
         public static string PersonalBeelineUrl = ConfigurationManager.AppSettings["PersonalBeelineUrl"];
         public static int MinimumAge = int.Parse(ConfigurationManager.AppSettings["MinimumAge"]);
         public static int MaximumAge = int.Parse(ConfigurationManager.AppSettings["MaximumAge"]);
+        public static string OtherRegion = ConfigurationManager.AppSettings["OtherRegion"];
 
         public static string CbnUrl = ConfigurationManager.AppSettings["CbnUrl"];
         public static string CbnUser = ConfigurationManager.AppSettings["CbnUser"];

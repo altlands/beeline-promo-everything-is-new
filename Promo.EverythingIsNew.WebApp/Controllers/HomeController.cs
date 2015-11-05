@@ -4,7 +4,6 @@ using Promo.EverythingIsNew.DAL.Cbn;
 using Promo.EverythingIsNew.DAL.Cbn.Dto;
 using Promo.EverythingIsNew.DAL.Events;
 using Promo.EverythingIsNew.DAL.Vk;
-using Promo.EverythingIsNew.Domain;
 using Promo.EverythingIsNew.WebApp.Models;
 using System;
 using System.Configuration;
@@ -60,8 +59,6 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             }
             catch (Exception e)
             {
-
-
                 VkEvents.Log.GeneralError(e);
                 throw;
             }
@@ -74,7 +71,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             // if birthsday year is not provided  it is necessary to compare with the current year
             if (userProfile.Birthday != null &&
                 userProfile.Birthday.Value.Year != DateTime.Now.Year &&
-                !Helpers.IsAgeAllowed(userProfile.Birthday ?? new DateTime()))
+                !Helpers.IsAgeAllowed(userProfile.Birthday))
             {
                 return Redirect(MvcApplication.PersonalBeelineUrl);
             }
@@ -88,33 +85,25 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(UserProfileViewModel userProfile)
         {
-            var oldUserProfile = Helpers.DecodeFromCookies(this.ControllerContext);
-            userProfile.Uid = oldUserProfile.Uid;
-            userProfile.MarketCode = Helpers.GetMarketCodeFromCity(userProfile.SelectMyCity);
-            userProfile.Soc = Helpers.GetSocFromCity(userProfile.SelectMyCity);
-            userProfile.Birthday = new DateTime(userProfile.Year, userProfile.Month, userProfile.Day);
+            ActionResult result = RedirectToAction("Offer");
+            Helpers.RestoreUserProfile(this.ControllerContext, userProfile);
 
+            result = Helpers.CheckAgeIsAllowed(userProfile, result);
 
-            // var result = await MvcApplication.CbnClient.Update(Helpers.MapToUpdate(userProfile));
+            result = Helpers.CheckRegionIsAllowed(userProfile, result);
+
+            result = Helpers.CheckPersonalDataIsAllowed(userProfile, result);
+
+            var messageResult = await Helpers.SendUserProfileToCbn(userProfile);
             // Add ModelState validation messages
             // return index page if ModelState is not valid
 
             // post to cbn api status and redirect if account is already used or if 
 
-            // check age
-            if (!Helpers.IsAgeAllowed(userProfile.Birthday ?? new DateTime()))
-            {
-                return Redirect(MvcApplication.PersonalBeelineUrl);
-            }
-
-            if (userProfile.SelectMyCity == "Другой регион")
-            {
-                return Redirect(MvcApplication.PersonalBeelineUrl);
-            }
-
             Helpers.EncodeToCookies(userProfile, this.ControllerContext);
-            return RedirectToAction("Offer");
+            return result;
         }
+
 
 
         public async Task<ActionResult> Offer()

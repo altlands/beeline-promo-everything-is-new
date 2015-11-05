@@ -118,7 +118,7 @@
 
                 <div class="form-line">
                     <div class="checkbox">
-                        <input type="checkbox" name="agree">
+                        @Html.CheckBoxFor(model => model.IsPersonalDataAgree)
                         <span>Разрешаю использовать публичные данные моего профиля Вконтакте</span>
                         <div class="hint">мы не будем передавать данные третьим лицам и&nbsp;использовать профиль для&nbsp;публикации постов</div>
                     </div>
@@ -126,7 +126,7 @@
 
                 <div class="form-line">
                     <div class="checkbox">
-                        <input type="checkbox" name="spam_me_please">
+                        @Html.CheckBoxFor(model => model.IsMailingAgree)
                         <span>Хочу получать по e-mail информацию о скидках, акциях и&nbsp;новых продуктах Билайн</span>
                     </div>
                 </div>

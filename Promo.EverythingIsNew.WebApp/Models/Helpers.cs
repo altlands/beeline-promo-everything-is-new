@@ -2,13 +2,11 @@
 using Promo.EverythingIsNew.DAL.Cbn.Dto;
 using Promo.EverythingIsNew.DAL.Dcp;
 using Promo.EverythingIsNew.DAL.Vk;
-using Promo.EverythingIsNew.Domain;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -109,6 +107,22 @@ namespace Promo.EverythingIsNew.WebApp.Models
             };
         }
 
+        internal static async Task<MessageResult> SendUserProfileToCbn(UserProfileViewModel userProfile)
+        {
+            MessageResult result;
+            if (userProfile.IsPersonalDataAgree == true)
+            {
+                result = await MvcApplication.CbnClient.PostMessage(Helpers.MapToMessage(userProfile));
+            }
+            else
+            {
+                var ctnOnlyUserProfile = new UserProfileViewModel { CTN = userProfile.CTN };
+                result = await MvcApplication.CbnClient.PostMessage(Helpers.MapToMessage(userProfile));
+            }
+
+            return result;
+        }
+
         public static OfferViewModel GetOfferViewModel(UserProfileViewModel userProfile)
         {
             var targetTarif = DcpClient.GetTariff(MvcApplication.dcpConnectionString, userProfile.Soc, userProfile.MarketCode);
@@ -134,7 +148,7 @@ namespace Promo.EverythingIsNew.WebApp.Models
                 cities.Add(item.City);
             }
             cities.OrderBy(x => x).ToList();
-            cities.Add("Другой город");
+            cities.Add(MvcApplication.OtherRegion);
             return cities;
         }
 
@@ -154,8 +168,9 @@ namespace Promo.EverythingIsNew.WebApp.Models
             return items.FirstOrDefault();
         }
 
-        public static bool IsAgeAllowed(DateTime birthday)
+        public static bool IsAgeAllowed(DateTime? oldBirthday)
         {
+            DateTime birthday = oldBirthday ?? new DateTime();
 
             if (birthday.AddYears(MvcApplication.MinimumAge) <= DateTime.Now &&
                 birthday.AddYears(MvcApplication.MaximumAge) >= DateTime.Now)
@@ -163,6 +178,45 @@ namespace Promo.EverythingIsNew.WebApp.Models
                 return true;
             }
             return false;
+        }
+
+        internal static void RestoreUserProfile(ControllerContext controllerContext, UserProfileViewModel userProfile)
+        {
+            var oldUserProfile = Helpers.DecodeFromCookies(controllerContext);
+            userProfile.Uid = oldUserProfile.Uid;
+            userProfile.MarketCode = Helpers.GetMarketCodeFromCity(userProfile.SelectMyCity);
+            userProfile.Soc = Helpers.GetSocFromCity(userProfile.SelectMyCity);
+            userProfile.Birthday = new DateTime(userProfile.Year, userProfile.Month, userProfile.Day);
+        }
+
+        internal static ActionResult CheckRegionIsAllowed(UserProfileViewModel userProfile, ActionResult result)
+        {
+            if (userProfile.SelectMyCity == MvcApplication.OtherRegion)
+            {
+                result = new RedirectResult(MvcApplication.PersonalBeelineUrl);
+            }
+
+            return result;
+        }
+
+        internal static ActionResult CheckAgeIsAllowed(UserProfileViewModel userProfile, ActionResult result)
+        {
+            if (!Helpers.IsAgeAllowed(userProfile.Birthday ?? new DateTime()))
+            {
+                result = new RedirectResult(MvcApplication.PersonalBeelineUrl);
+            }
+
+            return result;
+        }
+
+        internal static ActionResult CheckPersonalDataIsAllowed(UserProfileViewModel userProfile, ActionResult result)
+        {
+            if (!userProfile.IsPersonalDataAgree)
+            {
+                result = new RedirectResult(MvcApplication.PersonalBeelineUrl);
+            }
+
+            return result;
         }
 
     }
