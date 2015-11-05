@@ -5,7 +5,7 @@ using System.Reflection;
 [assembly: AssemblyCompanyAttribute("AltLanDS")]
 [assembly: AssemblyCopyrightAttribute("Copyright © AltLanDS 2012-2015")]
 [assembly: AssemblyVersionAttribute("1.2.0")]
-[assembly: AssemblyFileVersionAttribute("1.2.0.61")]
+[assembly: AssemblyFileVersionAttribute("1.2.0.63")]
 namespace System {
     internal static class AssemblyVersionInformation {
         internal const string Version = "1.2.0";
