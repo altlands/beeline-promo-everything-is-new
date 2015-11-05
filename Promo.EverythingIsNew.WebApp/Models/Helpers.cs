@@ -40,10 +40,10 @@ namespace Promo.EverythingIsNew.WebApp.Models
             };
         }
 
-        public static EntryForm MapToEntryForm(VkModel userData)
+        public static UserProfileViewModel MapToUserProfileViewModel(VkModel userData)
         {
             var model = userData.Response.Select(x =>
-                new EntryForm
+                new UserProfileViewModel
                 {
                     Uid = x.Id,
                     Academy = x.Academy,
@@ -55,12 +55,12 @@ namespace Promo.EverythingIsNew.WebApp.Models
                     Email = x.Email,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
-                    CTN = x.Phone,
+                    CTN = !string.IsNullOrEmpty(x.Phone) ? x.Phone.Substring(Math.Max(0, x.Phone.Length - 10)) : null,
                 }).FirstOrDefault();
             return model;
         }
 
-        public static void EncodeToCookies(EntryForm userProfile, ControllerContext controllerContext)
+        public static void EncodeToCookies(UserProfileViewModel userProfile, ControllerContext controllerContext)
         {
             var cookie = new HttpCookie("UserProfile");
             var json = JsonConvert.SerializeObject(userProfile);
@@ -71,7 +71,7 @@ namespace Promo.EverythingIsNew.WebApp.Models
             controllerContext.HttpContext.Response.Cookies.Add(cookie);
         }
 
-        public static EntryForm DecodeFromCookies(ControllerContext controllerContext)
+        public static UserProfileViewModel DecodeFromCookies(ControllerContext controllerContext)
         {
             if (controllerContext.HttpContext.Request.Cookies.AllKeys.Contains("UserProfile"))
             {
@@ -79,13 +79,13 @@ namespace Promo.EverythingIsNew.WebApp.Models
                 var encoded = Convert.FromBase64String(cookie.Value);
                 var decoded = MachineKey.Unprotect(encoded);
                 var json = Encoding.Unicode.GetString(decoded);
-                EntryForm userProfile = JsonConvert.DeserializeObject<EntryForm>(json);
+                UserProfileViewModel userProfile = JsonConvert.DeserializeObject<UserProfileViewModel>(json);
                 return userProfile;
             }
             return null;
         }
 
-        public static Update MapToUpdate(EntryForm userProfile)
+        public static Update MapToUpdate(UserProfileViewModel userProfile)
         {
             return new Update
             {
@@ -99,7 +99,7 @@ namespace Promo.EverythingIsNew.WebApp.Models
             };
         }
 
-        public static Message MapToMessage(EntryForm userProfile)
+        public static Message MapToMessage(UserProfileViewModel userProfile)
         {
             return new Message
             {
@@ -109,7 +109,7 @@ namespace Promo.EverythingIsNew.WebApp.Models
             };
         }
 
-        public static OfferViewModel GetOfferViewModel(EntryForm userProfile)
+        public static OfferViewModel GetOfferViewModel(UserProfileViewModel userProfile)
         {
             var targetTarif = DcpClient.GetTariff(MvcApplication.dcpConnectionString, userProfile.Soc, userProfile.MarketCode);
 

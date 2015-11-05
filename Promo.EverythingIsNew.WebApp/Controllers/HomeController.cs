@@ -48,7 +48,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             {
                 if (!string.IsNullOrEmpty(code))
                 {
-                    EntryForm userProfile = Helpers.MapToEntryForm(await VkClient.GetUserData(
+                    UserProfileViewModel userProfile = Helpers.MapToUserProfileViewModel(await VkClient.GetUserData(
                         code, MvcApplication.VkAppId, MvcApplication.VkAppSecretKey, MvcApplication.RedirectUri));
                     Helpers.EncodeToCookies(userProfile, this.ControllerContext);
                     return RedirectToAction("Index");
@@ -86,7 +86,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index(EntryForm userProfile)
+        public async Task<ActionResult> Index(UserProfileViewModel userProfile)
         {
             var oldUserProfile = Helpers.DecodeFromCookies(this.ControllerContext);
             userProfile.Uid = oldUserProfile.Uid;

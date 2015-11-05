@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace Promo.EverythingIsNew.Domain
+namespace Promo.EverythingIsNew.WebApp.Models
 {
-    public class EntryForm
+    public class UserProfileViewModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; } // 5.1	Имя, Фамилия(из ВК);
@@ -13,8 +16,9 @@ namespace Promo.EverythingIsNew.Domain
         public int Month { get; set; }
         public int Year { get; set; }
         public string SelectMyCity { get; set; }  // 5.5	Город (из ВК или автоопределенный) 5.5.1	Если указано несколько городов, то берется первый из списка
-        public string Captcha { get; set; }  
+        public string Captcha { get; set; }
         public bool IsMailingAgree { get; set; }  // Согласие на получение рассылки
+        public bool IsPersonalDataAgree { get; set; }  // Согласие на обработку персональных данных
         public string Academy { get; set; }  // Вуз
         public string Uid { get; set; }
         public string MarketCode { get; set; }
@@ -31,4 +35,3 @@ namespace Promo.EverythingIsNew.Domain
 
     */
 }
-
