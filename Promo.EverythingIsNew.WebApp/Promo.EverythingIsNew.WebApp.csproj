@@ -278,6 +278,8 @@
     <Content Include="fonts\officinaserifc-book-webfont.ttf" />
     <Content Include="fonts\officinaserifc-book-webfont.woff" />
     <None Include="log.config" />
+    <Content Include="PrivateSettings2.config" />
+    <Content Include="PrivateSettings3.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
