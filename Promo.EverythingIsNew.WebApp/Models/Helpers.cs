@@ -174,6 +174,11 @@ namespace Promo.EverythingIsNew.WebApp.Models
         {
             DateTime birthday = oldBirthday ?? new DateTime();
 
+            if (birthday.Year == 1804)
+            {
+                return true;
+            }
+
             if (birthday.AddYears(MvcApplication.MinimumAge) <= DateTime.Now &&
                 birthday.AddYears(MvcApplication.MaximumAge) >= DateTime.Now)
             {

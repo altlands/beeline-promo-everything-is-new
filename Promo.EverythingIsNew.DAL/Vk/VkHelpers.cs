@@ -25,12 +25,14 @@ namespace Promo.EverythingIsNew.DAL.Vk
 
         public static string FixEmptyYear(string userInfo)
         {
+            var currentYear = DateTime.Now.Year;
+
             var birthdayStart = userInfo.IndexOf("bdate\":\"");
             var mySubstring = userInfo.Substring(birthdayStart + 8, 11);
             var endPosition = mySubstring.IndexOf("\"");
             if (endPosition != -1 && endPosition < 8)
             {
-                userInfo = userInfo.Insert(birthdayStart + 8 + endPosition, ".2015");
+                userInfo = userInfo.Insert(birthdayStart + 8 + endPosition, ".1804");
             }
 
             return userInfo;
