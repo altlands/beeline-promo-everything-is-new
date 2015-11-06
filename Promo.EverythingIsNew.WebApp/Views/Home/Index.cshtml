@@ -48,40 +48,41 @@
                     </div>
                 </div>
 
-                <div class="form-line" style="float:left;">
+                <div class="form-line" style="float:left;z-index:100">
                     <label for="birthday_field">Дата рождения</label>
                     <div class="field" style="width:100px">
                         <table>
                             <tr>
                                 <td>
                                     <div class="text-select text-select-day" style="width:100px;">
-                                        <div class="inp option-selected option-selected-day" style="width:28px !important;">@Model.Day</div>
+                                        <div class="inp option-selected option-selected-day" style="width:28px !important;z-index:101">@Model.Day</div>
                                         <input type="hidden" name="day" id="day" value="@Model.Day" style="width:100px" />
-                                        <div class="text-select-list text-select-list-day" style="display:block;width:100px;">
+                                        <div class="text-select-list text-select-list-day" style="display:block;width:100px;z-index:100">
                                             @foreach (int day in Enumerable.Range(1, 31))
                                             {
-                                                <div class="option option-day" style="width:100px">@day</div>
+                                                <div class="option option-day" style="width:100px;background-color:white">@day</div>
                                             }
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="text-select text-select-month" style="width:100px;float:left;">
-                                        <div class="inp option-selected option-selected-month" style="width:28px !important;">@Model.Month</div>
+                                        <div class="inp option-selected option-selected-month" style="width:28px !important;z-index:101">@Model.Month</div>
                                         <input type="hidden" name="month" id="month" value="@Model.Month" />
-                                        <div class="text-select-list text-select-list-month" style="display:block;">
+                                        <div class="text-select-list text-select-list-month" style="display:block;z-index:100">
                                             @foreach (int month in Enumerable.Range(1, 12))
                                             {
-                                                <div class="option option-month" style="width:100px">@month</div>
+                                                <div class="option option-month" style="width:80px">@month</div>
                                             }
                                         </div>
                                     </div>
                                 </td>
+                                <td>&nbsp;&nbsp;&nbsp;</td>
                                 <td>
-                                    <div class="text-select text-select-year" style="width:100px;float:left;">
-                                        <div class="inp option-selected option-selected-year" style="width:28px !important;">@Model.Year</div>
-                                        <input type="hidden" name="year" id="year" value="@Model.Year" />
-                                        <div class="text-select-list text-select-list-year" style="display:block;">
+                                    <div class="text-select text-select-year" style="width:128px;float:left;">
+                                        <div class="inp option-selected option-selected-year" style="width:58px !important;z-index:101">@Math.Max(Model.Year, 1915)</div>
+                                        <input type="hidden" name="year" id="year" value="@Math.Max(Model.Year, 1915)" />
+                                        <div class="text-select-list text-select-list-year" style="display:block;z-index:100">
                                             @for (int year = DateTime.Now.Year - 10; year > 1915; year--)
                                             {
                                                 <div class="option option-year" style="width:100px">@year</div>
