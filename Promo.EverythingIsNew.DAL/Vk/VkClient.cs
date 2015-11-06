@@ -54,7 +54,7 @@ namespace Promo.EverythingIsNew.DAL.Vk
                     var birthdayStart = userInfo.IndexOf("bdate\":\"");
                     var mySubstring = userInfo.Substring(birthdayStart+8, 11);
                     var endPosition = mySubstring.IndexOf("\"");
-                    if (endPosition < 8)
+                    if (endPosition != -1 && endPosition < 8)
                     {
                         userInfo = userInfo.Insert(birthdayStart + 8 + endPosition, ".2015");
                     }
