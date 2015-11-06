@@ -138,20 +138,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
 
         public async Task<ActionResult> Test()
         {
-
-            var result = await MvcApplication.CbnClient.Update(new Update
-            {
-                ctn = "777",
-                email = "777",
-                //name = "777",
-            });
-
-            //var result = await MvcApplication.CbnClient.GetStatus(new Status
-            //{
-            //    ctn = "9653868754",
-            //    uid = "1083308",
-            //});
-
+            var result = new Object();
 
             return Content(JsonConvert.SerializeObject(result));
         }
