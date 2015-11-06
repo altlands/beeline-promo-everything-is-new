@@ -53,8 +53,10 @@ namespace Promo.EverythingIsNew.WebApp.Models
                     Email = x.Email,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
-                    CTN = !string.IsNullOrEmpty(x.Phone) ? x.Phone.Replace("(", "").Replace(")", "").Replace("-", "").Trim().Substring(Math.Max(0, x.Phone.Length - 10)) : null,
+                    CTN = x.Phone
                 }).FirstOrDefault();
+            model.CTN = !string.IsNullOrEmpty(model.CTN) ? model.CTN.Replace("(", "").Replace(")", "").Replace("-", "").Trim() : "";
+            model.CTN = model.CTN.Substring(Math.Max(0, model.CTN.Length - 10));
             return model;
         }
 
