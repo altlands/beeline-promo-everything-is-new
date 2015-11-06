@@ -51,16 +51,9 @@ namespace Promo.EverythingIsNew.DAL.Vk
                     urlToGetInfo = VkHelpers.UserApiUrl(accessData);
                     var userInfo = client.DownloadString(urlToGetInfo);
 
-                    var birthdayStart = userInfo.IndexOf("bdate\":\"");
-                    var mySubstring = userInfo.Substring(birthdayStart+8, 11);
-                    var endPosition = mySubstring.IndexOf("\"");
-                    if (endPosition != -1 && endPosition < 8)
-                    {
-                        userInfo = userInfo.Insert(birthdayStart + 8 + endPosition, ".2015");
-                    }
+                    userInfo = VkHelpers.FixEmptyYear(userInfo);
 
-
-                    var converter = new IsoDateTimeConverter { Culture = new CultureInfo("ru-RU")};
+                    var converter = new IsoDateTimeConverter { Culture = new CultureInfo("ru-RU") };
                     userData = JsonConvert.DeserializeObject<VkModel>(userInfo, converter);
                     userData.Response.FirstOrDefault().Email = accessData.Email;
 
@@ -73,7 +66,6 @@ namespace Promo.EverythingIsNew.DAL.Vk
                     throw;
                 }
             }
-
         }
     }
 }

@@ -22,5 +22,18 @@ namespace Promo.EverythingIsNew.DAL.Vk
             var urlToGetCode = "https://oauth.vk.com/authorize?client_id=" + vkAppId + "&display=page&redirect_uri=" + redirectUri + "&scope=email&response_type=code&v=5.37" + "&x=" + DateTime.Now.Ticks;
             return urlToGetCode;
         }
+
+        public static string FixEmptyYear(string userInfo)
+        {
+            var birthdayStart = userInfo.IndexOf("bdate\":\"");
+            var mySubstring = userInfo.Substring(birthdayStart + 8, 11);
+            var endPosition = mySubstring.IndexOf("\"");
+            if (endPosition != -1 && endPosition < 8)
+            {
+                userInfo = userInfo.Insert(birthdayStart + 8 + endPosition, ".2015");
+            }
+
+            return userInfo;
+        }
     }
 }
