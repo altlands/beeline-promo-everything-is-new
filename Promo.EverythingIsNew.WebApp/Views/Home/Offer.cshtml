@@ -60,7 +60,7 @@
                         <div class="row">
                             @if (line.NumValue != null)
                             {
-                                <div class="price"><span>@line.NumValue</span> @line.UnitDisplay</div>
+                                <div class="price"><span>@line.NumValue.Replace(",00","")</span> @line.UnitDisplay</div>
                             }
                             @if (line.Value != null)
                             {
