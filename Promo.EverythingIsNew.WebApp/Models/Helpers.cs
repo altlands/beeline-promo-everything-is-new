@@ -226,6 +226,20 @@ namespace Promo.EverythingIsNew.WebApp.Models
             return result;
         }
 
+        internal static ActionResult CheckCtnUidAlreadyUsed(StatusResult statusResult, ActionResult result)
+        {
+            if (statusResult.is_used_ctn ^ statusResult.is_used_uid)
+            {
+                result = new RedirectResult(MvcApplication.PersonalBeelineUrl);
+            }
+
+            if ((statusResult.is_used_ctn && statusResult.is_used_uid) == true && !statusResult.Is_used_uid_with_ctn)
+            {
+                result = new RedirectResult(MvcApplication.PersonalBeelineUrl);
+            }
+            return result;
+        }
+
         internal static string CalculateSelectedCity(UserProfileViewModel userProfile, System.Collections.Generic.List<string> cities)
         {
             string result;
