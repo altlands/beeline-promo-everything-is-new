@@ -95,11 +95,11 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
 
             result = Helpers.CheckPersonalDataIsAllowed(userProfile, result);
 
-            var messageResult = await Helpers.SendUserProfileToCbn(userProfile);
+            var updateResult = await Helpers.SendUserProfileToCbn(userProfile);
             // Add ModelState validation messages
             // return index page if ModelState is not valid
 
-            var statusResult = await Helpers.CheckCtnUidStatusInCbn(userProfile);
+            var statusResult = await MvcApplication.CbnClient.GetStatus(Helpers.MapToStatus(userProfile));
             result = Helpers.CheckCtnUidAlreadyUsed(statusResult, result);
 
             Helpers.EncodeToCookies(userProfile, this.ControllerContext);

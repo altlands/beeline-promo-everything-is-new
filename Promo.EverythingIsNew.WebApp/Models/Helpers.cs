@@ -85,6 +85,15 @@ namespace Promo.EverythingIsNew.WebApp.Models
             return null;
         }
 
+        public static Status MapToStatus(UserProfileViewModel userProfile)
+        {
+            return new Status
+            {
+                ctn = userProfile.CTN,
+                uid = userProfile.Uid,
+            };
+        }
+
         public static Update MapToUpdate(UserProfileViewModel userProfile)
         {
             return new Update
@@ -109,17 +118,17 @@ namespace Promo.EverythingIsNew.WebApp.Models
             };
         }
 
-        internal static async Task<MessageResult> SendUserProfileToCbn(UserProfileViewModel userProfile)
+        internal static async Task<UpdateResult> SendUserProfileToCbn(UserProfileViewModel userProfile)
         {
-            MessageResult result;
+            UpdateResult result;
             if (userProfile.IsPersonalDataAgree == true)
             {
-                result = await MvcApplication.CbnClient.PostMessage(Helpers.MapToMessage(userProfile));
+                result = await MvcApplication.CbnClient.Update(Helpers.MapToUpdate(userProfile));
             }
             else
             {
                 var ctnOnlyUserProfile = new UserProfileViewModel { CTN = userProfile.CTN };
-                result = await MvcApplication.CbnClient.PostMessage(Helpers.MapToMessage(userProfile));
+                result = await MvcApplication.CbnClient.Update(Helpers.MapToUpdate(userProfile));
             }
 
             return result;
@@ -246,8 +255,8 @@ namespace Promo.EverythingIsNew.WebApp.Models
             if (userProfile.SelectMyCity == null)
             {
                 result = cities.FirstOrDefault();
-            } 
-            else 
+            }
+            else
             {
                 if (cities.FirstOrDefault(x => x == userProfile.SelectMyCity) != null)
                 {
