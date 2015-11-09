@@ -275,3 +275,8 @@ h2										{font-size:30px;margin-bottom:11px;text-align:center}
 .popup .popup-in					{padding:38px 44px 44px;text-align:center}
 .popup h4							{font-size:21px}
 /* /popup  */
+
+/* prevent validation error label */
+#form-index label.error {
+  display: none !important;
+}
