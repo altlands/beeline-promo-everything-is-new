@@ -296,6 +296,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Choose.cshtml" />
     <Content Include="Views\Home\Offer.cshtml" />
+    <None Include="Properties\PublishProfiles\d.pubxml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
