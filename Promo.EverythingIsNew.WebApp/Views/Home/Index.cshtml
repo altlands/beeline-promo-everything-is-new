@@ -58,10 +58,11 @@
                                         <div class="inp option-selected option-selected-day" style="width:28px !important;z-index:101">@Model.Day</div>
                                         <input type="hidden" name="day" id="day" value="@Model.Day" style="width:100px" />
                                         <div class="text-select-list text-select-list-day" style="display:block;width:100px;z-index:100">
-                                            @foreach (int day in Enumerable.Range(1, 31))
-                                            {
-                                                <div class="option option-day" style="width:100px;background-color:white">@day</div>
-                                            }
+                                            @*@foreach (int day in Enumerable.Range(1, 31))
+                                                {
+                                                    <div class="option option-day" style="width:100px;background-color:white">@day</div>
+                                                }*@
+
                                         </div>
                                     </div>
                                 </td>
@@ -69,11 +70,11 @@
                                     <div class="text-select text-select-month" style="width:100px;float:left;">
                                         <div class="inp option-selected option-selected-month" style="width:28px !important;z-index:101">@Model.Month</div>
                                         <input type="hidden" name="month" id="month" value="@Model.Month" />
-                                        <div class="text-select-list text-select-list-month" style="display:block;z-index:100">
-                                            @foreach (int month in Enumerable.Range(1, 12))
-                                            {
-                                                <div class="option option-month" style="width:80px">@month</div>
-                                            }
+                                        <div id="select-list-month" class="text-select-list text-select-list-month" style="display:block;z-index:100">
+                                            @*@foreach (int month in Enumerable.Range(1, 12))
+                                                {
+                                                    <div class="option option-month" style="width:80px">@month</div>
+                                                }*@
                                         </div>
                                     </div>
                                 </td>
@@ -141,6 +142,14 @@
         </div><!--slim-form-->
     </div><!--content-wrap-->
 </div><!--content-->
+
+<div class="my-datapicker-template">
+    <div class="option option-day"></div>
+    <div class="option option-month"></div>
+    <div class="option option-year"></div>
+</div>
+
+
 
 <script>
     $(function () {
@@ -223,7 +232,7 @@
             options_month.show();
         });
 
-        options_month.click(function () {
+        $(document).on("click", ".option-month", function () {
             var innerHtml = $(this).html();
             dropdown_month.hide();
             selected_month.html(innerHtml);
@@ -291,6 +300,41 @@
                 }
             }
         });
+
+
+        //function updateNumberOfDays() {
+        //    $('#days').html('');
+        //    month = $('#months').val();
+        //    year = $('#years').val();
+        //    days = daysInMonth(month, year);
+
+        //    for (i = 1; i < days + 1 ; i++) {
+        //        $('#days').append($('<option />').val(i).html(i));
+        //    }
+
+        //}
+
+        function daysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        //for (i = new Date().getFullYear() ; i > 1900; i--) {
+        //    $('#years').append($('<option />').val(i).html(i));
+        //}
+
+        for (i = 1; i < 13; i++) {
+            $('#select-list-month').append($('<div class="option option-month">' + i + '</div>'));
+        }
+
+
+        //updateNumberOfDays();
+
+        //$('#years, #months').change(function () {
+
+        //    updateNumberOfDays();
+
+        //});
+
     });
 </script>
 

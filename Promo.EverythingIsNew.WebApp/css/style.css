@@ -280,3 +280,9 @@ h2										{font-size:30px;margin-bottom:11px;text-align:center}
 #form-index label.error {
   display: none !important;
 }
+
+/*#region my-datapicker-template */
+
+.my-datapicker-template             {display: none;}
+
+/*#endregion */
