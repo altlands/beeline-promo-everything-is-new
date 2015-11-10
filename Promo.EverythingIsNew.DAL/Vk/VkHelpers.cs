@@ -28,11 +28,19 @@ namespace Promo.EverythingIsNew.DAL.Vk
             var currentYear = DateTime.Now.Year;
 
             var birthdayStart = userInfo.IndexOf("bdate\":\"");
-            var mySubstring = userInfo.Substring(birthdayStart + 8, 11);
-            var endPosition = mySubstring.IndexOf("\"");
-            if (endPosition != -1 && endPosition < 8)
+
+            if (birthdayStart == -1)
             {
-                userInfo = userInfo.Insert(birthdayStart + 8 + endPosition, ".1804");
+                userInfo = userInfo.Replace("\"id\"", "\"bdate\":\"1.1.1804\",\"id\"");
+            }
+            else
+            {
+                var mySubstring = userInfo.Substring(birthdayStart + 8, 11);
+                var endPosition = mySubstring.IndexOf("\"");
+                if (endPosition != -1 && endPosition < 8)
+                {
+                    userInfo = userInfo.Insert(birthdayStart + 8 + endPosition, ".1804");
+                }
             }
 
             return userInfo;
