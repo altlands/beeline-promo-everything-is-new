@@ -18,7 +18,7 @@ namespace Promo.EverythingIsNew.DAL.Vk
         [JsonProperty("last_name")]
         public string LastName { get; set; }
         [JsonProperty("bdate")]
-        public DateTime? Birthday { get; set; }
+        public DateTime Birthday { get; set; }
         [JsonProperty("city")]
         public City City { get; set; }
         public string Email { get; set; }
