@@ -57,12 +57,7 @@
                                     <div class="text-select text-select-day" style="width:100px;">
                                         <div class="inp option-selected option-selected-day" style="width:28px !important;z-index:101">@Model.Day</div>
                                         <input type="hidden" name="day" id="day" value="@Model.Day" style="width:100px" />
-                                        <div class="text-select-list text-select-list-day" style="display:block;width:100px;z-index:100">
-                                            @*@foreach (int day in Enumerable.Range(1, 31))
-                                                {
-                                                    <div class="option option-day" style="width:100px;background-color:white">@day</div>
-                                                }*@
-
+                                        <div id="select-list-day" class="text-select-list text-select-list-day" style="width:100px;z-index:100">
                                         </div>
                                     </div>
                                 </td>
@@ -70,11 +65,7 @@
                                     <div class="text-select text-select-month" style="width:100px;float:left;">
                                         <div class="inp option-selected option-selected-month" style="width:28px !important;z-index:101">@Model.Month</div>
                                         <input type="hidden" name="month" id="month" value="@Model.Month" />
-                                        <div id="select-list-month" class="text-select-list text-select-list-month" style="display:block;z-index:100">
-                                            @*@foreach (int month in Enumerable.Range(1, 12))
-                                                {
-                                                    <div class="option option-month" style="width:80px">@month</div>
-                                                }*@
+                                        <div id="select-list-month" class="text-select-list text-select-list-month" style="z-index:100">
                                         </div>
                                     </div>
                                 </td>
@@ -83,7 +74,7 @@
                                     <div class="text-select text-select-year" style="width:128px;float:left;">
                                         <div class="inp option-selected option-selected-year" style="width:58px !important;z-index:101">@Math.Max(Model.Year, 1915)</div>
                                         <input type="hidden" name="year" id="year" value="@Math.Max(Model.Year, 1915)" />
-                                        <div class="text-select-list text-select-list-year" style="display:block;z-index:100">
+                                        <div id="select-list-year" class="text-select-list text-select-list-year" style="z-index:100">
                                             @for (int year = DateTime.Now.Year - 10; year > 1915; year--)
                                             {
                                                 <div class="option option-year" style="width:100px">@year</div>
@@ -94,9 +85,6 @@
                             </tr>
                         </table>
                     </div>
-                    @*<div class="field">
-                            @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "inp" } })
-                        </div>*@
                 </div>
                 <br>
                 <div class="form-line">
@@ -142,14 +130,6 @@
         </div><!--slim-form-->
     </div><!--content-wrap-->
 </div><!--content-->
-
-<div class="my-datapicker-template">
-    <div class="option option-day"></div>
-    <div class="option option-month"></div>
-    <div class="option option-year"></div>
-</div>
-
-
 
 <script>
     $(function () {
@@ -211,7 +191,7 @@
             options_day.show();
         });
 
-        options_day.click(function () {
+        $(document).on("click", ".option-day", function () {
             var innerHtml = $(this).html();
             dropdown_day.hide();
             selected_day.html(innerHtml);
@@ -237,6 +217,7 @@
             dropdown_month.hide();
             selected_month.html(innerHtml);
             hidden_month.val(innerHtml);
+            updateNumberOfDays();
         });
 
         var dropdown_year = $(".text-select-list-year");
@@ -253,11 +234,12 @@
             options_year.show();
         });
 
-        options_year.click(function () {
+        $(document).on("click", ".option-year", function () {
             var innerHtml = $(this).html();
             dropdown_year.hide();
             selected_year.html(innerHtml);
             hidden_year.val(innerHtml);
+            updateNumberOfDays();
         });
 
 
@@ -302,39 +284,34 @@
         });
 
 
-        //function updateNumberOfDays() {
-        //    $('#days').html('');
-        //    month = $('#months').val();
-        //    year = $('#years').val();
-        //    days = daysInMonth(month, year);
-
-        //    for (i = 1; i < days + 1 ; i++) {
-        //        $('#days').append($('<option />').val(i).html(i));
-        //    }
-
-        //}
+        function updateNumberOfDays() {
+            $('#select-list-day').html('');
+            month = $('#month').val();
+            year = $('#year').val();
+            days = daysInMonth(month, year);
+            if (hidden_day.val() > days) {
+                for (i = 1; i < days + 1 ; i++) {
+                    $('#select-list-day').append($('<div class="option option-day">' + i + '</div>'));
+                }
+                selected_day.html('1');
+                hidden_day.val('1');
+            }
+            else {
+                for (i = 1; i < days + 1 ; i++) {
+                    $('#select-list-day').append($('<div class="option option-day">' + i + '</div>'));
+                }
+            }
+        }
 
         function daysInMonth(month, year) {
             return new Date(year, month, 0).getDate();
         }
 
-        //for (i = new Date().getFullYear() ; i > 1900; i--) {
-        //    $('#years').append($('<option />').val(i).html(i));
-        //}
-
         for (i = 1; i < 13; i++) {
             $('#select-list-month').append($('<div class="option option-month">' + i + '</div>'));
         }
 
-
-        //updateNumberOfDays();
-
-        //$('#years, #months').change(function () {
-
-        //    updateNumberOfDays();
-
-        //});
-
+        updateNumberOfDays();
     });
 </script>
 
