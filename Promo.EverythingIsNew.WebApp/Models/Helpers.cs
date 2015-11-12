@@ -102,7 +102,7 @@ namespace Promo.EverythingIsNew.WebApp.Models
                 ctn = userProfile.CTN,
                 email = userProfile.Email,
                 email_unsubscribe = (!userProfile.IsMailingAgree),
-                name = userProfile.LastName,
+                name = userProfile.FirstName,
                 surname = userProfile.LastName,
                 region = userProfile.SelectMyCity
             };
