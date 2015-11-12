@@ -44,6 +44,8 @@ namespace Promo.EverythingIsNew.WebApp
         public static TariffIndexesCollection TariffIndexes =
             ((TariffsConfiguration)ConfigurationManager.GetSection("tariffsConfiguration")).Codes;
 
+        public static bool VkStubMode = ConfigurationManager.AppSettings["VkStubMode"] == "true";
+
         protected void Application_Start()
         {
 
