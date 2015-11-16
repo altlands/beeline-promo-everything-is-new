@@ -3,7 +3,6 @@
 
 # PrivateSettings must be ignored for security reasons
 PrivateSettings.config
-PrivateSettings2.config
 SystemWeb.config
 
 # User-specific files
@@ -249,4 +248,4 @@ drop/
 buildtools/Fake
 buildtools/AltLanDS.Fake
 buildtools/misc/version.txt
-Promo.EverythingIsNew.WebApp/PrivateSettings3.config
+
