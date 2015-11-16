@@ -45,6 +45,7 @@ namespace Promo.EverythingIsNew.WebApp
             ((TariffsConfiguration)ConfigurationManager.GetSection("tariffsConfiguration")).Codes;
 
         public static bool VkStubMode = ConfigurationManager.AppSettings["VkStubMode"] == "true";
+        public static bool IgnoreSsl = ConfigurationManager.AppSettings["IgnoreSsl"] == "true";
 
         protected void Application_Start()
         {
@@ -66,9 +67,6 @@ namespace Promo.EverythingIsNew.WebApp
 
             LogtestEvents();
 
-#if DEBUG
-            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-#endif
 
             //var observable = new ObservableEventListener();
             //observable.EnableEvents(SelfCareWidgetEvents.LogEventSource, EventLevel.Verbose, (EventKeywords)(-1));
@@ -95,6 +93,10 @@ namespace Promo.EverythingIsNew.WebApp
             TestEvents.Log.Critical("Hello world In-Process Critical");
             TestEvents.Log.Error("Hello world In-Process Error");
             TestEvents.Log.Informational("Hello world In-Process Informational");
+            if (IgnoreSsl)
+            {
+                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            }
         }
     }
 }
