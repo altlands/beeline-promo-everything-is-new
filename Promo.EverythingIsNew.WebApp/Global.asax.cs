@@ -65,34 +65,6 @@ namespace Promo.EverythingIsNew.WebApp
             cbnObservable.EnableEvents(CbnEvents.LogEventSource, EventLevel.Verbose, (EventKeywords)(-1));
             cbnObservable.LogToCategory("cbn");
 
-            LogtestEvents();
-
-
-            //var observable = new ObservableEventListener();
-            //observable.EnableEvents(SelfCareWidgetEvents.LogEventSource, EventLevel.Verbose, (EventKeywords)(-1));
-            //observable.LogToCategory("fttbSelfCare");
-
-            //var observable2 = new ObservableEventListener();
-            //observable2.EnableEvents(UssEvents.LogEventSource, EventLevel.Verbose, (EventKeywords)(-1));
-            //observable2.LogToCategory("uss");
-
-            //var observable3 = new ObservableEventListener();
-            //observable3.EnableEvents(UssEvents.LogEventSource, EventLevel.Error, (EventKeywords)(-1));
-            //observable3.LogToCategory("errors");
-
-        }
-
-        private static void LogtestEvents()
-        {
-            var listener = new ObservableEventListener();
-            listener.EnableEvents(TestEvents.Log, EventLevel.LogAlways, Keywords.All);
-
-            listener.LogToConsole();
-            listener.LogToElasticsearch("SLABEL", "http://localhost:9200", "myindex", "mytype", bufferingCount: 1);
-
-            TestEvents.Log.Critical("Hello world In-Process Critical");
-            TestEvents.Log.Error("Hello world In-Process Error");
-            TestEvents.Log.Informational("Hello world In-Process Informational");
             if (IgnoreSsl)
             {
                 ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
