@@ -277,7 +277,7 @@
     <Content Include="fonts\officinaserifc-book-webfont.eot" />
     <Content Include="fonts\officinaserifc-book-webfont.ttf" />
     <Content Include="fonts\officinaserifc-book-webfont.woff" />
-    <None Include="log.config" />
+    <Content Include="log.config" />
     <Content Include="PrivateSettings.config" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
