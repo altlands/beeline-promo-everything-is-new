@@ -1,6 +1,7 @@
 ﻿using Promo.EverythingIsNew.DAL.Cbn;
 using Promo.EverythingIsNew.DAL.Cbn.Dto;
 using System.Diagnostics.Tracing;
+using System.Net.Http;
 
 namespace Promo.EverythingIsNew.DAL.Events
 {
@@ -24,5 +25,14 @@ namespace Promo.EverythingIsNew.DAL.Events
         void CbnUpdateStarted(Update update);
         [Event(7, Level = EventLevel.Informational, Message = "Cbn updating finished")]
         void CbnUpdateFinished(UpdateResult result);
+
+        [Event(8, Level = EventLevel.Informational, Message = "Test Cbn getting status started")]
+        void TestCbnGetStatusStarted(Status status);
+        [Event(9, Level = EventLevel.Error, Message = "Error while using Test Cbn Client")]
+        void TestCbnGeneralExceptionError(string method, CbnException response);
+        [Event(10, Level = EventLevel.Informational, Message = "Test Cbn response")]
+        void TestCbnGetStatusResponse(HttpResponseMessage response);
+        [Event(11, Level = EventLevel.Informational, Message = "Test Cbn result")]
+        void TestCbnGetStatusFinished(StatusResult result);
     }
 }

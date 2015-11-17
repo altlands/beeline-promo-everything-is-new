@@ -1,14 +1,8 @@
 ﻿using AltLanDS.Beeline.DpcProxy.Client;
-using Newtonsoft.Json;
-using Promo.EverythingIsNew.DAL.Cbn;
-using Promo.EverythingIsNew.DAL.Cbn.Dto;
 using Promo.EverythingIsNew.DAL.Events;
 using Promo.EverythingIsNew.DAL.Vk;
 using Promo.EverythingIsNew.WebApp.Models;
 using System;
-using System.Configuration;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -136,14 +130,5 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
                 return new HttpStatusCodeResult(400);
             }
         }
-
-        public async Task<ActionResult> Test()
-        {
-            var result = new Object();
-
-            return Content(JsonConvert.SerializeObject(result));
-        }
-
-
     }
 }

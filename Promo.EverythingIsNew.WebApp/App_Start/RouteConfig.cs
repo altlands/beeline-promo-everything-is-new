@@ -47,7 +47,7 @@ namespace Promo.EverythingIsNew.WebApp
             routes.MapRoute(
                 name: "test",
                 url: "test",
-                defaults: new { controller = "home", action = "test" }
+                defaults: new { controller = "test", action = "index" }
             );
 
             routes.MapRoute(
