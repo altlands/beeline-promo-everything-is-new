@@ -35,7 +35,7 @@ namespace Promo.EverythingIsNew.DAL.Cbn
         {
             CbnEvents.Log.CbnGetStatusStarted(status);
             string request = null;
-            var response = new HttpResponseMessage();
+            HttpResponseMessage response;
 
             try
             {
@@ -50,7 +50,7 @@ namespace Promo.EverythingIsNew.DAL.Cbn
             }
             catch
             {
-                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response.ToString()));
+                //CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response.ToString()));
                 throw;
             }
             return null;
@@ -59,7 +59,7 @@ namespace Promo.EverythingIsNew.DAL.Cbn
         public async Task<MessageResult> PostMessage(Message message)
         {
             CbnEvents.Log.CbnPostMessageStarted(message);
-            var response = new HttpResponseMessage();
+            HttpResponseMessage response;
 
             try
             {
@@ -73,7 +73,7 @@ namespace Promo.EverythingIsNew.DAL.Cbn
             }
             catch
             {
-                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response.ToString()));
+                //CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response.ToString()));
                 throw;
             }
             return null;
@@ -82,7 +82,7 @@ namespace Promo.EverythingIsNew.DAL.Cbn
         public async Task<UpdateResult> Update(Update update)
         {
             CbnEvents.Log.CbnUpdateStarted(update);
-            var response = new HttpResponseMessage();
+            HttpResponseMessage response;
 
             try
             {
@@ -102,7 +102,7 @@ namespace Promo.EverythingIsNew.DAL.Cbn
             }
             catch
             {
-                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response.ToString()));
+                //CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response.ToString()));
                 throw;
             }
             return null;
