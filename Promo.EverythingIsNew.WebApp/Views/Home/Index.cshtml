@@ -1,4 +1,29 @@
 ﻿@model Promo.EverythingIsNew.WebApp.Models.UserProfileViewModel
+@{
+    List<string> citiesSource = ViewBag.Cities;
+    List<List<string>> cities = new List<List<string>>();
+
+    int batchSize = (citiesSource.Count + 2) / 3;
+    List<string> newList = new List<string>();
+    for (int i = 0; i < batchSize ; i++)
+    {
+        newList.Add(citiesSource[i]);
+    }
+    cities.Add(newList);
+    newList = new List<string>();
+    for (int i = batchSize; i < batchSize * 2 ; i++)
+    {
+        newList.Add(citiesSource[i]);
+    }
+    cities.Add(newList);
+    newList = new List<string>();
+    for (int i = batchSize * 2; i < citiesSource.Count; i++)
+    {
+        newList.Add(citiesSource[i]);
+    }
+    cities.Add(newList);
+
+}
 <div class="header">
     <div class="header-wrap">
         <h1>@Model.FirstName!</h1>
@@ -90,22 +115,26 @@
                 <div class="form-line">
                     <label for="place_field">Город</label>
                     <div class="field">
-                        <div class="text-select text-select-city">
+                        <div class="select-city-rel text-select-city">
                             <div class="inp option-selected option-selected-city">@ViewBag.SelectedCity</div>
                             <input type="hidden" name="SelectMyCity" id="SelectMyCity" value="@ViewBag.SelectedCity" />
-                            <div class="text-select-list text-select-list-city" style="display:block">
-                                @foreach (string city in ViewBag.Cities)
+                            <div class="hint">Город или ближайший областной центр, в котором живете</div>
+                            <div class="text-select-list text-select-list-city select-city">
+                                @foreach (var cityBatch in cities)
                                 {
-                                    <div class="option option-city">@city</div>
+                                    <div class="select-city-col">
+                                        @foreach (var city in cityBatch)
+                                        {
+                                            <div class="entry option-city"><a href="#">@city</a></div>
+                                        }
+                                    </div>
                                 }
-                                @*<div class="option" alias="Питер,СПБ">Санкт-Петербург</div>*@
+                                @*<div class="option option-city">city</div>*@
                             </div>
                         </div>
-                        <div class="hint">Город или ближайший областной центр, в котором живете</div>
                     </div>
                 </div>
                 <br>
-
                 <div class="form-line">
                     <div class="checkbox">
                         @Html.CheckBoxFor(model => model.IsPersonalDataAgree)
@@ -314,4 +343,3 @@
         updateNumberOfDays();
     });
 </script>
-

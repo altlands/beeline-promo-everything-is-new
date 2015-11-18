@@ -270,6 +270,7 @@
     <Content Include="i\logo.png" />
     <Content Include="i\p.gif" />
     <Content Include="i\popup-close.png" />
+    <Content Include="i\popup-nose.png" />
     <Content Include="i\select-down.png" />
     <Content Include="i\success-check.png" />
     <Content Include="i\triangle.png" />
