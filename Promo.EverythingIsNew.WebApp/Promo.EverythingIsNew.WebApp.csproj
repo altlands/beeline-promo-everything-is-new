@@ -251,6 +251,7 @@
     <Compile Include="Models\TestEvents.cs" />
     <Compile Include="Models\UserProfileViewModel.cs" />
     <Compile Include="Models\UsssClient.cs" />
+    <Compile Include="Models\ViewHelpers.cs" />
     <Compile Include="netfx\System\Guard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
