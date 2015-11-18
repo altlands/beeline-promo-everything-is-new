@@ -295,3 +295,11 @@ h2										{font-size:30px;margin-bottom:11px;text-align:center}
 .select-city-col					{width:200px;padding-right:30px;float:left;line-height:16px;font-size:13px;}
 .select-city-col .entry				{padding:2px 0px;color:#282828}
 .select-city-col .entry a			{text-decoration:none;color:#282828}
+
+.select-year-rel					{position:relative;z-index:99;}
+.select-year						{position:absolute;top:75px;left:-165px;background:#fff;z-index:100;border:2px solid #d7d7d7;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px;padding:30px 40px 40px;width:400px}
+.select-year:before					{content:"";position:absolute;top:-11px;left:200px;width:18px;height:11px;background:url('../i/popup-nose.png') 0 0 no-repeat}
+.select-year-col					{width:50px;padding-right:30px;float:left;line-height:16px;font-size:13px;}
+.select-year-col .entry				{padding:2px 0px;color:#282828}
+
+.text-select-city:before					{content:"";position:absolute;z-index:0;top:21px;right:40px;width:11px;height:10px;background:url('../i/select-down.png') 0 0 no-repeat}

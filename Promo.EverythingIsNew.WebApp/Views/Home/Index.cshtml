@@ -23,6 +23,9 @@
         newCityList.Add(citiesSource[i]);
     }
     cities.Add(newCityList);
+
+    cities = Promo.EverythingIsNew.WebApp.Models.ViewHelpers.SplitByColumns<string>(ViewBag.Cities, 3);
+
     // years by columns
             List<int> yearsSource = Enumerable.Range(1915,DateTime.Now.Year - 10 - 1915).OrderByDescending(x=>x).ToList();
     List<List<int>> years = new List<List<int>>();
@@ -149,8 +152,8 @@
                 <br>
                 <div class="form-line">
                     <label for="place_field">Город</label>
-                    <div class="field">
-                        <div class="select-city-rel text-select-city">
+                    <div class="field"> 
+                        <div class="text-select text-select-city">
                             <div class="inp option-selected option-selected-city">@ViewBag.SelectedCity</div>
                             <input type="hidden" name="SelectMyCity" id="SelectMyCity" value="@ViewBag.SelectedCity" />
                             <div class="hint">Город или ближайший областной центр, в котором живете</div>
