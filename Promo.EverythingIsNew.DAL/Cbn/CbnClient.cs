@@ -35,7 +35,7 @@ namespace Promo.EverythingIsNew.DAL.Cbn
         {
             CbnEvents.Log.CbnGetStatusStarted(status);
             string request = null;
-            HttpResponseMessage response;
+            HttpResponseMessage response = null;
 
             try
             {
@@ -48,9 +48,9 @@ namespace Promo.EverythingIsNew.DAL.Cbn
                     return result;
                 }
             }
-            catch
+            catch (Exception e)
             {
-                //CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response.ToString()));
+                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response != null ? response.ToString() : "response = null", e.InnerException));
                 throw;
             }
             return null;
@@ -59,7 +59,7 @@ namespace Promo.EverythingIsNew.DAL.Cbn
         public async Task<MessageResult> PostMessage(Message message)
         {
             CbnEvents.Log.CbnPostMessageStarted(message);
-            HttpResponseMessage response;
+            HttpResponseMessage response = null;
 
             try
             {
@@ -71,9 +71,9 @@ namespace Promo.EverythingIsNew.DAL.Cbn
                     return result;
                 }
             }
-            catch
+            catch (Exception e)
             {
-                //CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response.ToString()));
+                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response != null ? response.ToString() : "response = null", e.InnerException));
                 throw;
             }
             return null;
@@ -82,7 +82,7 @@ namespace Promo.EverythingIsNew.DAL.Cbn
         public async Task<UpdateResult> Update(Update update)
         {
             CbnEvents.Log.CbnUpdateStarted(update);
-            HttpResponseMessage response;
+            HttpResponseMessage response = null;
 
             try
             {
@@ -100,9 +100,9 @@ namespace Promo.EverythingIsNew.DAL.Cbn
                     return result;
                 }
             }
-            catch
+            catch (Exception e)
             {
-                //CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response.ToString()));
+                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response != null ? response.ToString() : "response = null", e.InnerException));
                 throw;
             }
             return null;
