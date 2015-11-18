@@ -119,13 +119,13 @@
                             <div class="inp option-selected option-selected-city">@ViewBag.SelectedCity</div>
                             <input type="hidden" name="SelectMyCity" id="SelectMyCity" value="@ViewBag.SelectedCity" />
                             <div class="hint">Город или ближайший областной центр, в котором живете</div>
-                            <div class="text-select-list text-select-list-city select-city">
+                            <div class="text-select-list-city select-city">
                                 @foreach (var cityBatch in cities)
                                 {
                                     <div class="select-city-col">
                                         @foreach (var city in cityBatch)
                                         {
-                                            <div class="entry option-city"><a href="#">@city</a></div>
+                                            <div class="entry option-city">@city</div>
                                         }
                                     </div>
                                 }
@@ -135,6 +135,7 @@
                     </div>
                 </div>
                 <br>
+
                 <div class="form-line">
                     <div class="checkbox">
                         @Html.CheckBoxFor(model => model.IsPersonalDataAgree)
