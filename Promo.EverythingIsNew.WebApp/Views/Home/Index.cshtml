@@ -1,27 +1,57 @@
 ﻿@model Promo.EverythingIsNew.WebApp.Models.UserProfileViewModel
 @{
+    // cities by columns
     List<string> citiesSource = ViewBag.Cities;
     List<List<string>> cities = new List<List<string>>();
 
-    int batchSize = (citiesSource.Count + 2) / 3;
-    List<string> newList = new List<string>();
-    for (int i = 0; i < batchSize ; i++)
+    int cityBatchSize = (citiesSource.Count + 2) / 3;
+    List<string> newCityList = new List<string>();
+    for (int i = 0; i < cityBatchSize ; i++)
     {
-        newList.Add(citiesSource[i]);
+        newCityList.Add(citiesSource[i]);
     }
-    cities.Add(newList);
-    newList = new List<string>();
-    for (int i = batchSize; i < batchSize * 2 ; i++)
+    cities.Add(newCityList);
+    newCityList = new List<string>();
+    for (int i = cityBatchSize; i < cityBatchSize * 2 ; i++)
     {
-        newList.Add(citiesSource[i]);
+        newCityList.Add(citiesSource[i]);
     }
-    cities.Add(newList);
-    newList = new List<string>();
-    for (int i = batchSize * 2; i < citiesSource.Count; i++)
+    cities.Add(newCityList);
+    newCityList = new List<string>();
+    for (int i = cityBatchSize * 2; i < citiesSource.Count; i++)
     {
-        newList.Add(citiesSource[i]);
+        newCityList.Add(citiesSource[i]);
     }
-    cities.Add(newList);
+    cities.Add(newCityList);
+    // years by columns
+            List<int> yearsSource = Enumerable.Range(1915,DateTime.Now.Year - 10 - 1915).OrderByDescending(x=>x).ToList();
+    List<List<int>> years = new List<List<int>>();
+
+    int yearBatchSize = (yearsSource.Count + 3) / 4;
+    List<int> newYearList = new List<int>();
+    for (int i = 0; i < yearBatchSize; i++)
+    {
+        newYearList.Add(yearsSource[i]);
+    }
+    years.Add(newYearList);
+    newYearList = new List<int>();
+    for (int i = yearBatchSize; i < yearBatchSize * 2; i++)
+    {
+        newYearList.Add(yearsSource[i]);
+    }
+    years.Add(newYearList);
+    newYearList = new List<int>();
+    for (int i = yearBatchSize * 2; i < yearBatchSize * 3; i++)
+    {
+        newYearList.Add(yearsSource[i]);
+    }
+    years.Add(newYearList);
+    newYearList = new List<int>();
+    for (int i = yearBatchSize * 3; i < yearsSource.Count; i++)
+    {
+        newYearList.Add(yearsSource[i]);
+    }
+    years.Add(newYearList);
 
 }
 <div class="header">
@@ -99,10 +129,15 @@
                                     <div class="text-select text-select-year" style="width:128px;float:left;">
                                         <div class="inp option-selected option-selected-year" style="width:58px !important;z-index:101">@Math.Max(Model.Year, 1915)</div>
                                         <input type="hidden" name="year" id="year" value="@Math.Max(Model.Year, 1915)" />
-                                        <div id="select-list-year" class="text-select-list text-select-list-year" style="z-index:100">
-                                            @for (int year = DateTime.Now.Year - 10; year > 1915; year--)
+                                        <div id="select-list-year" class="select-year text-select-list-year" style="z-index:100">
+                                            @foreach (var yearBatch in years)
                                             {
-                                                <div class="option option-year" style="width:100px">@year</div>
+                                                <div class="select-year-col">
+                                                    @foreach (var year in yearBatch)
+                                                    {
+                                                        <div class="entry option-year">@year</div>
+                                                    }
+                                                </div>
                                             }
                                         </div>
                                     </div>
