@@ -1,60 +1,9 @@
 ﻿@model Promo.EverythingIsNew.WebApp.Models.UserProfileViewModel
 @{
-    // cities by columns
-    List<string> citiesSource = ViewBag.Cities;
-    List<List<string>> cities = new List<List<string>>();
-
-    int cityBatchSize = (citiesSource.Count + 2) / 3;
-    List<string> newCityList = new List<string>();
-    for (int i = 0; i < cityBatchSize ; i++)
-    {
-        newCityList.Add(citiesSource[i]);
-    }
-    cities.Add(newCityList);
-    newCityList = new List<string>();
-    for (int i = cityBatchSize; i < cityBatchSize * 2 ; i++)
-    {
-        newCityList.Add(citiesSource[i]);
-    }
-    cities.Add(newCityList);
-    newCityList = new List<string>();
-    for (int i = cityBatchSize * 2; i < citiesSource.Count; i++)
-    {
-        newCityList.Add(citiesSource[i]);
-    }
-    cities.Add(newCityList);
-
-    cities = Promo.EverythingIsNew.WebApp.Models.ViewHelpers.SplitByColumns<string>(ViewBag.Cities, 3);
-
-    // years by columns
-            List<int> yearsSource = Enumerable.Range(1915,DateTime.Now.Year - 10 - 1915).OrderByDescending(x=>x).ToList();
-    List<List<int>> years = new List<List<int>>();
-
-    int yearBatchSize = (yearsSource.Count + 3) / 4;
-    List<int> newYearList = new List<int>();
-    for (int i = 0; i < yearBatchSize; i++)
-    {
-        newYearList.Add(yearsSource[i]);
-    }
-    years.Add(newYearList);
-    newYearList = new List<int>();
-    for (int i = yearBatchSize; i < yearBatchSize * 2; i++)
-    {
-        newYearList.Add(yearsSource[i]);
-    }
-    years.Add(newYearList);
-    newYearList = new List<int>();
-    for (int i = yearBatchSize * 2; i < yearBatchSize * 3; i++)
-    {
-        newYearList.Add(yearsSource[i]);
-    }
-    years.Add(newYearList);
-    newYearList = new List<int>();
-    for (int i = yearBatchSize * 3; i < yearsSource.Count; i++)
-    {
-        newYearList.Add(yearsSource[i]);
-    }
-    years.Add(newYearList);
+    var cities = Promo.EverythingIsNew.WebApp.Models.ViewHelpers.SplitByColumns<string>(ViewBag.Cities, 3);
+    var years = Promo.EverythingIsNew.WebApp.Models.ViewHelpers.SplitByColumns<int>(Enumerable.Range(1915, DateTime.Now.Year - 10 - 1915).OrderByDescending(x => x).ToList(), 5);
+    var months = Promo.EverythingIsNew.WebApp.Models.ViewHelpers.SplitByColumns<int>(Enumerable.Range(1, 12).ToList(), 3);
+    var days = Promo.EverythingIsNew.WebApp.Models.ViewHelpers.SplitByColumns<int>(Enumerable.Range(1, 31).ToList(), 4);
 
 }
 <div class="header">
@@ -115,7 +64,16 @@
                                     <div class="text-select text-select-day" style="width:100px;">
                                         <div class="inp option-selected option-selected-day" style="width:28px !important;z-index:101">@Model.Day</div>
                                         <input type="hidden" name="day" id="day" value="@Model.Day" style="width:100px" />
-                                        <div id="select-list-day" class="text-select-list text-select-list-day" style="width:100px;z-index:100">
+                                        <div id="select-list-day" class="select-day text-select-list-day" style="z-index:100">
+                                            @foreach (var dayBatch in days)
+                                            {
+                                                <div class="select-day-col">
+                                                    @foreach (var day in dayBatch)
+                                                    {
+                                                        <div class="entry option-day">@day</div>
+                                                    }
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 </td>
@@ -123,7 +81,16 @@
                                     <div class="text-select text-select-month" style="width:100px;float:left;">
                                         <div class="inp option-selected option-selected-month" style="width:28px !important;z-index:101">@Model.Month</div>
                                         <input type="hidden" name="month" id="month" value="@Model.Month" />
-                                        <div id="select-list-month" class="text-select-list text-select-list-month" style="z-index:100">
+                                        <div id="select-list-month" class="select-month text-select-list-month" style="z-index:100">
+                                            @foreach (var monthBatch in months)
+                                            {
+                                                <div class="select-month-col">
+                                                    @foreach (var month in monthBatch)
+                                                    {
+                                                        <div class="entry option-month">@month</div>
+                                                    }
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 </td>
@@ -152,7 +119,7 @@
                 <br>
                 <div class="form-line">
                     <label for="place_field">Город</label>
-                    <div class="field"> 
+                    <div class="field">
                         <div class="text-select text-select-city">
                             <div class="inp option-selected option-selected-city">@ViewBag.SelectedCity</div>
                             <input type="hidden" name="SelectMyCity" id="SelectMyCity" value="@ViewBag.SelectedCity" />
@@ -201,6 +168,8 @@
 
 <script>
     $(function () {
+
+        // cities dropdown
         var dropdown_city = $(".text-select-list-city");
         var options_city = $('.option-city');
         var selected_city = $('.option-selected-city');
@@ -222,29 +191,7 @@
             hidden_city.val(innerHtml);
         });
 
-        $(document).mouseup(function (e) {
-            if (!dropdown_city.is(e.target)
-                && dropdown_city.has(e.target).length === 0) {
-                dropdown_city.hide();
-            }
-
-            if (!dropdown_day.is(e.target)
-                && dropdown_day.has(e.target).length === 0) {
-                dropdown_day.hide();
-            }
-
-            if (!dropdown_month.is(e.target)
-                && dropdown_month.has(e.target).length === 0) {
-                dropdown_month.hide();
-            }
-
-            if (!dropdown_year.is(e.target)
-                && dropdown_year.has(e.target).length === 0) {
-                dropdown_year.hide();
-            }
-        });
-
-
+        // days dropdown
         var dropdown_day = $(".text-select-list-day");
         var options_day = $('.option-day');
         var selected_day = $('.option-selected-day');
@@ -266,6 +213,7 @@
             hidden_day.val(innerHtml);
         });
 
+        // months dropdown
         var dropdown_month = $(".text-select-list-month");
         var options_month = $('.option-month');
         var selected_month = $('.option-selected-month');
@@ -288,6 +236,7 @@
             updateNumberOfDays();
         });
 
+        // years dropdown
         var dropdown_year = $(".text-select-list-year");
         var options_year = $('.option-year');
         var selected_year = $('.option-selected-year');
@@ -310,8 +259,30 @@
             updateNumberOfDays();
         });
 
+        /* close dropdowns on click in empty space around */
+        $(document).mouseup(function (e) {
+            if (!dropdown_city.is(e.target)
+                && dropdown_city.has(e.target).length === 0) {
+                dropdown_city.hide();
+            }
 
+            if (!dropdown_day.is(e.target)
+                && dropdown_day.has(e.target).length === 0) {
+                dropdown_day.hide();
+            }
 
+            if (!dropdown_month.is(e.target)
+                && dropdown_month.has(e.target).length === 0) {
+                dropdown_month.hide();
+            }
+
+            if (!dropdown_year.is(e.target)
+                && dropdown_year.has(e.target).length === 0) {
+                dropdown_year.hide();
+            }
+        });
+
+        /* validation */
         $("#form-index").validate({
             rules: {
                 CTN: {
@@ -353,30 +324,29 @@
 
 
         function updateNumberOfDays() {
-            $('#select-list-day').html('');
             month = $('#month').val();
             year = $('#year').val();
             days = daysInMonth(month, year);
             if (hidden_day.val() > days) {
-                for (i = 1; i < days + 1 ; i++) {
-                    $('#select-list-day').append($('<div class="option option-day">' + i + '</div>'));
-                }
                 selected_day.html('1');
                 hidden_day.val('1');
             }
-            else {
-                for (i = 1; i < days + 1 ; i++) {
-                    $('#select-list-day').append($('<div class="option option-day">' + i + '</div>'));
+            
+            options_day.each(function (index) {
+                if (index > days)
+                {
+                    console.log("hide");
+                    $(this).hide();
                 }
-            }
+                else {
+                    console.log("show");
+                    $(this).show();
+                }
+            });
         }
 
         function daysInMonth(month, year) {
             return new Date(year, month, 0).getDate();
-        }
-
-        for (i = 1; i < 13; i++) {
-            $('#select-list-month').append($('<div class="option option-month">' + i + '</div>'));
         }
 
         updateNumberOfDays();
