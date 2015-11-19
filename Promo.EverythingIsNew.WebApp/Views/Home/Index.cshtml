@@ -170,94 +170,102 @@
     $(function () {
 
         // cities dropdown
-        var dropdown_city = $(".text-select-list-city");
-        var options_city = $('.option-city');
-        var selected_city = $('.option-selected-city');
-        var hidden_city = $('#SelectMyCity');
+        {
+            var dropdown_city = $(".text-select-list-city");
+            var options_city = $('.option-city');
+            var selected_city = $('.option-selected-city');
+            var hidden_city = $('#SelectMyCity');
 
-        options_city.hide();
-        dropdown_city.hide();
-        selected_city.show();
-
-        selected_city.click(function () {
-            dropdown_city.show();
-            options_city.show();
-        });
-
-        options_city.click(function () {
-            var innerHtml = $(this).html();
+            options_city.hide();
             dropdown_city.hide();
-            selected_city.html(innerHtml);
-            hidden_city.val(innerHtml);
-        });
+            selected_city.show();
+
+            selected_city.click(function () {
+                dropdown_city.show();
+                options_city.show();
+            });
+
+            options_city.click(function () {
+                var innerHtml = $(this).html();
+                dropdown_city.hide();
+                selected_city.html(innerHtml);
+                hidden_city.val(innerHtml);
+            });
+        }
 
         // days dropdown
-        var dropdown_day = $(".text-select-list-day");
-        var options_day = $('.option-day');
-        var selected_day = $('.option-selected-day');
-        var hidden_day = $('#day');
+        {
+            var dropdown_day = $(".text-select-list-day");
+            var options_day = $('.option-day');
+            var selected_day = $('.option-selected-day');
+            var hidden_day = $('#day');
 
-        options_day.hide();
-        dropdown_day.hide();
-        selected_day.show();
-
-        selected_day.click(function () {
-            dropdown_day.show();
-            options_day.show();
-        });
-
-        $(document).on("click", ".option-day", function () {
-            var innerHtml = $(this).html();
+            options_day.hide();
             dropdown_day.hide();
-            selected_day.html(innerHtml);
-            hidden_day.val(innerHtml);
-        });
+            //selected_day.show();
+
+            selected_day.click(function () {
+                dropdown_day.show();
+                //options_day.show();
+            });
+
+            $(document).on("click", ".option-day", function () {
+                var innerHtml = $(this).html();
+                dropdown_day.hide();
+                selected_day.html(innerHtml);
+                hidden_day.val(innerHtml);
+            });
+        }
 
         // months dropdown
-        var dropdown_month = $(".text-select-list-month");
-        var options_month = $('.option-month');
-        var selected_month = $('.option-selected-month');
-        var hidden_month = $('#month');
+        {
+            var dropdown_month = $(".text-select-list-month");
+            var options_month = $('.option-month');
+            var selected_month = $('.option-selected-month');
+            var hidden_month = $('#month');
 
-        options_month.hide();
-        dropdown_month.hide();
-        selected_month.show();
-
-        selected_month.click(function () {
-            dropdown_month.show();
-            options_month.show();
-        });
-
-        $(document).on("click", ".option-month", function () {
-            var innerHtml = $(this).html();
+            options_month.hide();
             dropdown_month.hide();
-            selected_month.html(innerHtml);
-            hidden_month.val(innerHtml);
-            updateNumberOfDays();
-        });
+            selected_month.show();
+
+            selected_month.click(function () {
+                dropdown_month.show();
+                options_month.show();
+            });
+
+            $(document).on("click", ".option-month", function () {
+                var innerHtml = $(this).html();
+                dropdown_month.hide();
+                selected_month.html(innerHtml);
+                hidden_month.val(innerHtml);
+                updateNumberOfDays();
+            });
+        }
 
         // years dropdown
-        var dropdown_year = $(".text-select-list-year");
-        var options_year = $('.option-year');
-        var selected_year = $('.option-selected-year');
-        var hidden_year = $('#year');
+        {
+            var dropdown_year = $(".text-select-list-year");
+            var options_year = $('.option-year');
+            var selected_year = $('.option-selected-year');
+            var hidden_year = $('#year');
 
-        options_year.hide();
-        dropdown_year.hide();
-        selected_year.show();
-
-        selected_year.click(function () {
-            dropdown_year.show();
-            options_year.show();
-        });
-
-        $(document).on("click", ".option-year", function () {
-            var innerHtml = $(this).html();
+            options_year.hide();
             dropdown_year.hide();
-            selected_year.html(innerHtml);
-            hidden_year.val(innerHtml);
-            updateNumberOfDays();
-        });
+            selected_year.show();
+
+            selected_year.click(function () {
+                dropdown_year.show();
+                options_year.show();
+            });
+
+            $(document).on("click", ".option-year", function () {
+                var innerHtml = $(this).html();
+                dropdown_year.hide();
+                selected_year.html(innerHtml);
+                hidden_year.val(innerHtml);
+                updateNumberOfDays();
+            });
+        }
 
         /* close dropdowns on click in empty space around */
         $(document).mouseup(function (e) {
@@ -331,16 +339,19 @@
                 selected_day.html('1');
                 hidden_day.val('1');
             }
-            
-            options_day.each(function (index) {
-                if (index > days)
+
+            options_day.each(function (index, element) {
+                if (index + 1 > days)
                 {
-                    console.log("hide");
-                    $(this).hide();
+                    $(this).css("backgroundColor", "yellow");
+                    //$(this).css("display", "none");
+                    //$(this).hide;
+                    
                 }
                 else {
-                    console.log("show");
-                    $(this).show();
+                    $(this).css("backgroundColor", "green");
+                    //$(this).show();
+                    
                 }
             });
         }
