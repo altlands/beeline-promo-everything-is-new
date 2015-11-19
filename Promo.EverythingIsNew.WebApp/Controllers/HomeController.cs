@@ -37,6 +37,10 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
 
         public async Task<ActionResult> VkResult(string code, string error)
         {
+            if (string.IsNullOrEmpty(code))
+            {
+                return RedirectToAction("Vk");
+            }
             VkEvents.Log.GetCodeFinished(code);
             try
             {
