@@ -343,15 +343,11 @@
             options_day.each(function (index, element) {
                 if (index + 1 > days)
                 {
-                    $(this).css("backgroundColor", "yellow");
-                    //$(this).css("display", "none");
-                    //$(this).hide;
+                    $(element).hide();
                     
                 }
                 else {
-                    $(this).css("backgroundColor", "green");
-                    //$(this).show();
-                    
+                    $(element).show();
                 }
             });
         }
