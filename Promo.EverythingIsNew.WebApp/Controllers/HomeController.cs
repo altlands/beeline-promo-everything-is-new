@@ -102,6 +102,8 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             var statusResult = await MvcApplication.CbnClient.GetStatus(MappingHelpers.MapToStatus(userProfile));
             result = RedirectHelpers.RedirectOnCtnAndUidAlreadyUsed(statusResult, result);
 
+            result = RedirectHelpers.RedirectOnBeelineCtn(statusResult, result);
+
             CommonHelpers.EncodeToCookies(userProfile, this.ControllerContext);
             return result;
         }

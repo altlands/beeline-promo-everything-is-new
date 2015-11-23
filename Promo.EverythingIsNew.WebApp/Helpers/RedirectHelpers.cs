@@ -51,5 +51,14 @@ namespace Promo.EverythingIsNew.WebApp.Helpers
             return result;
         }
 
+        internal static ActionResult RedirectOnBeelineCtn(StatusResult statusResult, ActionResult result)
+        {
+            if (MvcApplication.IsRedirectForBeelineCtn == true && statusResult.is_beeline_subscriber == true)
+            {
+                result = new RedirectResult(MvcApplication.PersonalBeelineUrl);
+            }
+
+            return result;
+        }
     }
 }
