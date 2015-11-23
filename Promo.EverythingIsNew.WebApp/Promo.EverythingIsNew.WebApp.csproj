@@ -245,13 +245,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Helpers.cs" />
+    <Compile Include="Helpers\CommonHelpers.cs" />
+    <Compile Include="Helpers\MappingHelpers.cs" />
     <Compile Include="Models\OfferViewModel.cs" />
+    <Compile Include="Helpers\RedirectHelpers.cs" />
     <Compile Include="Models\TariffsConfiguration.cs" />
     <Compile Include="Models\TestEvents.cs" />
     <Compile Include="Models\UserProfileViewModel.cs" />
     <Compile Include="Models\UsssClient.cs" />
-    <Compile Include="Models\ViewHelpers.cs" />
+    <Compile Include="Helpers\ViewHelpers.cs" />
     <Compile Include="netfx\System\Guard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

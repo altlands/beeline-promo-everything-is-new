@@ -2,6 +2,7 @@
 using Promo.EverythingIsNew.DAL.Events;
 using Promo.EverythingIsNew.DAL.Vk;
 using Promo.EverythingIsNew.WebApp.Models;
+using Promo.EverythingIsNew.WebApp.Helpers;
 using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -46,9 +47,9 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             {
                 if (!string.IsNullOrEmpty(code))
                 {
-                    UserProfileViewModel userProfile = Helpers.MapToUserProfileViewModel(await VkClient.GetUserData(
+                    UserProfileViewModel userProfile = MappingHelpers.MapToUserProfileViewModel(await VkClient.GetUserData(
                         code, MvcApplication.VkAppId, MvcApplication.VkAppSecretKey, MvcApplication.RedirectUri));
-                    Helpers.EncodeToCookies(userProfile, this.ControllerContext);
+                    CommonHelpers.EncodeToCookies(userProfile, this.ControllerContext);
                     return RedirectToAction("Index");
                 }
                 else
@@ -65,19 +66,19 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
 
         public ActionResult Index()
         {
-            var userProfile = Helpers.DecodeFromCookies(this.ControllerContext);
+            var userProfile = CommonHelpers.DecodeFromCookies(this.ControllerContext);
 
             // if birthsday year is not provided  it is necessary to compare with the current year
             if (userProfile.Birthday != null &&
                 userProfile.Birthday.Value.Year != DateTime.Now.Year &&
-                !Helpers.IsAgeAllowed(userProfile.Birthday))
+                !CommonHelpers.IsAgeAllowed(userProfile.Birthday))
             {
                 return Redirect(MvcApplication.PersonalBeelineUrl);
             }
 
-            var cities = Helpers.GetCities();
+            var cities = CommonHelpers.GetCities();
             ViewBag.Cities = cities;
-            ViewBag.SelectedCity = Helpers.CalculateSelectedCity(userProfile, cities);
+            ViewBag.SelectedCity = CommonHelpers.CalculateSelectedCity(userProfile, cities);
             return View(userProfile);
         }
 
@@ -86,22 +87,22 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
         public async Task<ActionResult> Index(UserProfileViewModel userProfile)
         {
             ActionResult result = RedirectToAction("Offer");
-            Helpers.RestoreUserProfile(this.ControllerContext, userProfile);
+            CommonHelpers.RestoreUserProfile(this.ControllerContext, userProfile);
 
-            result = Helpers.CheckAgeIsAllowed(userProfile, result);
+            result = RedirectHelpers.RedirectByAge(userProfile, result);
 
-            result = Helpers.CheckRegionIsAllowed(userProfile, result);
+            result = RedirectHelpers.RedirectByRegion(userProfile, result);
 
-            result = Helpers.CheckPersonalDataIsAllowed(userProfile, result);
+            result = RedirectHelpers.RedirectOnPersonalDataAgreement(userProfile, result);
 
-            var updateResult = await Helpers.SendUserProfileToCbn(userProfile);
+            var updateResult = await CommonHelpers.SendUserProfileToCbn(userProfile);
             // Add ModelState validation messages
             // return index page if ModelState is not valid
 
-            var statusResult = await MvcApplication.CbnClient.GetStatus(Helpers.MapToStatus(userProfile));
-            result = Helpers.CheckCtnUidAlreadyUsed(statusResult, result);
+            var statusResult = await MvcApplication.CbnClient.GetStatus(MappingHelpers.MapToStatus(userProfile));
+            result = RedirectHelpers.RedirectOnCtnAndUidAlreadyUsed(statusResult, result);
 
-            Helpers.EncodeToCookies(userProfile, this.ControllerContext);
+            CommonHelpers.EncodeToCookies(userProfile, this.ControllerContext);
             return result;
         }
 
@@ -109,8 +110,8 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
 
         public async Task<ActionResult> Offer()
         {
-            var userProfile = Helpers.DecodeFromCookies(this.ControllerContext);
-            OfferViewModel model = Helpers.GetOfferViewModel(userProfile);
+            var userProfile = CommonHelpers.DecodeFromCookies(this.ControllerContext);
+            OfferViewModel model = CommonHelpers.GetOfferViewModel(userProfile);
 
             return View(model);
         }
@@ -119,12 +120,12 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
         [ActionName("Offer")]
         public async Task<ActionResult> OfferPost(string email)
         {
-            var userProfile = Helpers.DecodeFromCookies(this.ControllerContext);
+            var userProfile = CommonHelpers.DecodeFromCookies(this.ControllerContext);
             if (!string.IsNullOrEmpty(email))
             {
                 userProfile.Email = email;
             }
-            var result = await MvcApplication.CbnClient.PostMessage(Helpers.MapToMessage(userProfile));
+            var result = await MvcApplication.CbnClient.PostMessage(MappingHelpers.MapToMessage(userProfile));
             if (result.is_message_sent == true)
             {
                 return Content(userProfile.Email);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Promo.EverythingIsNew.WebApp.Models
+namespace Promo.EverythingIsNew.WebApp.Helpers
 {
     public class ViewHelpers
     {

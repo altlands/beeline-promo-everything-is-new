@@ -1,9 +1,9 @@
 ﻿@model Promo.EverythingIsNew.WebApp.Models.UserProfileViewModel
 @{
-    var cities = Promo.EverythingIsNew.WebApp.Models.ViewHelpers.SplitByColumns<string>(ViewBag.Cities, 3);
-    var years = Promo.EverythingIsNew.WebApp.Models.ViewHelpers.SplitByColumns<int>(Enumerable.Range(1915, DateTime.Now.Year - 10 - 1915).OrderByDescending(x => x).ToList(), 5);
-    var months = Promo.EverythingIsNew.WebApp.Models.ViewHelpers.SplitByColumns<int>(Enumerable.Range(1, 12).ToList(), 3);
-    var days = Promo.EverythingIsNew.WebApp.Models.ViewHelpers.SplitByColumns<int>(Enumerable.Range(1, 31).ToList(), 4);
+    var cities = Promo.EverythingIsNew.WebApp.Helpers.ViewHelpers.SplitByColumns<string>(ViewBag.Cities, 3);
+    var years = Promo.EverythingIsNew.WebApp.Helpers.ViewHelpers.SplitByColumns<int>(Enumerable.Range(1915, DateTime.Now.Year - 10 - 1915).OrderByDescending(x => x).ToList(), 5);
+    var months = Promo.EverythingIsNew.WebApp.Helpers.ViewHelpers.SplitByColumns<int>(Enumerable.Range(1, 12).ToList(), 3);
+    var days = Promo.EverythingIsNew.WebApp.Helpers.ViewHelpers.SplitByColumns<int>(Enumerable.Range(1, 31).ToList(), 4);
 
 }
 <div class="header">
