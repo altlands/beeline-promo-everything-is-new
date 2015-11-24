@@ -38,10 +38,6 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
 
         public async Task<ActionResult> VkResult(string code, string error)
         {
-            if (string.IsNullOrEmpty(code))
-            {
-                return RedirectToAction("Vk");
-            }
             VkEvents.Log.GetCodeFinished(code);
             try
             {
@@ -52,9 +48,13 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
                     CommonHelpers.EncodeToCookies(userProfile, this.ControllerContext);
                     return RedirectToAction("Index");
                 }
-                else
+                else if (!string.IsNullOrEmpty(error))
                 {
                     return Redirect(MvcApplication.PersonalBeelineUrl);
+                }
+                else
+                {
+                    return RedirectToAction("Vk");
                 }
             }
             catch (Exception e)
