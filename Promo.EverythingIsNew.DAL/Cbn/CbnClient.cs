@@ -23,6 +23,7 @@ namespace Promo.EverythingIsNew.DAL.Cbn
             this.CbnPassword = cbnPassword;
             this.client = new HttpClient();
 
+            client.DefaultRequestHeaders.ExpectContinue = false;
             client.BaseAddress = new Uri(CbnUrl);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
