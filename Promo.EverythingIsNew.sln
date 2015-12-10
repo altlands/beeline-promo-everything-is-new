@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promo.EverythingIsNew.WebApp", "Promo.EverythingIsNew.WebApp\Promo.EverythingIsNew.WebApp.csproj", "{E5CE314C-17AA-4DF4-9AC8-9DBA2D0C43B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promo.EverythingIsNew.WebApp.Tests", "Promo.EverythingIsNew.WebApp.Tests\Promo.EverythingIsNew.WebApp.Tests.csproj", "{35BA378E-7472-4BFD-A88C-DD5B84C6E5EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8946ABD0-4CFC-485A-A5FA-E89D5A40D5C3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promo.EverythingIsNew.Domain", "Promo.EverythingIsNew.Domain\Promo.EverythingIsNew.Domain.csproj", "{96764198-4087-4553-9949-B914D8D738E0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promo.EverythingIsNew.DAL", "Promo.EverythingIsNew.DAL\Promo.EverythingIsNew.DAL.csproj", "{E33F332B-92DA-480D-A102-CC09A1828D52}"
 EndProject
@@ -51,10 +49,6 @@ Global
 		{35BA378E-7472-4BFD-A88C-DD5B84C6E5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35BA378E-7472-4BFD-A88C-DD5B84C6E5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35BA378E-7472-4BFD-A88C-DD5B84C6E5EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{96764198-4087-4553-9949-B914D8D738E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96764198-4087-4553-9949-B914D8D738E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96764198-4087-4553-9949-B914D8D738E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96764198-4087-4553-9949-B914D8D738E0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E33F332B-92DA-480D-A102-CC09A1828D52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E33F332B-92DA-480D-A102-CC09A1828D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E33F332B-92DA-480D-A102-CC09A1828D52}.Release|Any CPU.ActiveCfg = Release|Any CPU

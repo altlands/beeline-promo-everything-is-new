@@ -315,10 +315,6 @@
       <Project>{e33f332b-92da-480d-a102-cc09a1828d52}</Project>
       <Name>Promo.EverythingIsNew.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Promo.EverythingIsNew.Domain\Promo.EverythingIsNew.Domain.csproj">
-      <Project>{96764198-4087-4553-9949-b914d8d738e0}</Project>
-      <Name>Promo.EverythingIsNew.Domain</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
