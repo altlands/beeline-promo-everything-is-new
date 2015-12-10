@@ -19,7 +19,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             return View();
         }
 
-        public async Task<ActionResult> Vk()
+        public ActionResult Vk()
         {
             string urlToGetCode = null;
 
@@ -36,14 +36,14 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             }
         }
 
-        public async Task<ActionResult> VkResult(string code, string error)
+        public ActionResult VkResult(string code, string error)
         {
             VkEvents.Log.GetCodeFinished(code);
             try
             {
                 if (!string.IsNullOrEmpty(code))
                 {
-                    UserProfileViewModel userProfile = MappingHelpers.MapToUserProfileViewModel(await VkClient.GetUserData(
+                    UserProfileViewModel userProfile = MappingHelpers.MapToUserProfileViewModel(VkClient.GetUserData(
                         code, MvcApplication.VkAppId, MvcApplication.VkAppSecretKey, MvcApplication.RedirectUri));
                     CommonHelpers.EncodeToCookies(userProfile, this.ControllerContext);
                     return RedirectToAction("Index");
@@ -110,7 +110,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
 
 
 
-        public async Task<ActionResult> Offer()
+        public ActionResult Offer()
         {
             var userProfile = CommonHelpers.DecodeFromCookies(this.ControllerContext);
             OfferViewModel model = CommonHelpers.GetOfferViewModel(userProfile);

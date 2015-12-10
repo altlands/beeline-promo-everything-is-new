@@ -14,7 +14,7 @@ namespace Promo.EverythingIsNew.DAL.Vk
 {
     public class VkClient
     {
-        public static async Task<VkModel> GetUserData(string code, string vkAppId, string vkAppSecretKey, string redirectUri)
+        public static VkModel GetUserData(string code, string vkAppId, string vkAppSecretKey, string redirectUri)
         {
             VkModel userData;
             AccessData accessData;
