@@ -64,7 +64,7 @@
                             }
                             @if (line.Value != null)
                             {
-                                <div class="price">@line.Value</div>
+                                <div class="price">@Html.Raw(line.Value)</div>
                             }
                             <div class="desc">@Html.Raw(line.Title)</div>
                         </div>
