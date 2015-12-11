@@ -60,11 +60,15 @@ namespace Promo.EverythingIsNew.WebApp.Helpers
 
         public static OfferViewModel GetOfferViewModel(UserProfileViewModel userProfile)
         {
+            List<TariffGroupViewModel> groups = new List<TariffGroupViewModel>();
             var targetTarif = DcpClient.GetTariff(MvcApplication.dcpConnectionString, userProfile.Soc, userProfile.MarketCode);
 
-            var groups = targetTarif.DpcProduct.Parameters
-                    .GroupBy(g => g.Group.Id, (id, lines) => MappingHelpers.MapTariffGroup(id, lines))
-                    .OrderBy(s => s.SortOrder).ToList();
+            if (targetTarif != null)
+            {
+                groups = targetTarif.DpcProduct.Parameters
+                        .GroupBy(g => g.Group.Id, (id, lines) => MappingHelpers.MapTariffGroup(id, lines))
+                        .OrderBy(s => s.SortOrder).ToList();
+            }
 
             var model = new OfferViewModel
             {

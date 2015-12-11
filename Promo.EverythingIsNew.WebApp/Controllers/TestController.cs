@@ -65,39 +65,61 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             return Content(JsonConvert.SerializeObject(result));
         }
 
-        public async Task<ActionResult> I2()
+        public async Task<JsonResult> I2()
         {
-            var status = new Status { ctn = "9999999999", uid = "0000000000" };
-            CbnEvents.Log.TestCbnGetStatusStarted(status);
+            var update = new Update
+            {
+                ctn = "9175036509",
+                name = "Павел",
+                surname = "Абрамов",
+                region = "Нижний Новгород",
+                email = "m.c.peru@gmail.com",
+                birth_date = "29.03.1999 0:00:00",
+                email_unsubscribe = false
+            };
+
+            CbnEvents.Log.CbnUpdateStarted(update);
             string request = null;
-            HttpResponseMessage response;
+            HttpResponseMessage response = null;
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(MvcApplication.CbnUrl);
             string json;
 
+
+            client.DefaultRequestHeaders.ExpectContinue = false;
+
+
+
             var byteArray = Encoding.ASCII.GetBytes(MvcApplication.CbnUser + ":" + MvcApplication.CbnPassword);
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
-            StatusResult result = new StatusResult();
+            UpdateResult result = new UpdateResult();
 
             try
             {
-                request = String.Format("status?ctn={0}&uid={1}", status.ctn, status.uid);
-                response = await client.GetAsync(request);
-                CbnEvents.Log.TestCbnGetStatusResponse(response);
+                response = await client.PostAsJsonAsync("update", update);
                 if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    json = JsonConvert.DeserializeObject<dynamic>(content);
-                    CbnEvents.Log.TestCbnGetStatusFinished(result);
+                    result = await response.Content.ReadAsAsync<UpdateResult>();
+                    CbnEvents.Log.CbnUpdateFinished(result);
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    result = await response.Content.ReadAsAsync<UpdateResult>();
+                    CbnEvents.Log.CbnUpdateFinished(result);
+                    return Json(result, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception e)
             {
-                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException("catch", e.InnerException));
-            }
+                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response != null ? response.ToString() : "response = null", e.InnerException));
 
-            return Content(JsonConvert.SerializeObject(result));
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
