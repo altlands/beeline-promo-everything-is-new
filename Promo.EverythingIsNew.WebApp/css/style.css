@@ -203,6 +203,8 @@ h2										{font-size:30px;margin-bottom:11px;text-align:center}
 .foldable								{position:relative;border:1px solid #bababa;background:#fafafa;margin:22px 0px;border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;display:none;}
 .foldable .row:first-child				{border-top:none}
 .foldable .row							{font-size:13px;line-height:1.8;padding:21px 15px 20px 29px;border-top:1px solid #dadada}
+.foldable .row:after						{content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+
 .foldable .desc							{}
 .foldable .price span						{line-height:22px;font-size:20px;font-family:'officinaserifcregular'}
 .foldable .price + .desc 					{margin-right:150px;}
@@ -210,6 +212,8 @@ h2										{font-size:30px;margin-bottom:11px;text-align:center}
 .foldable:before						{content:"";position:absolute;top:-8px;left:66px;width:21px;height:9px;background:url('../i/block-nose.png') 0 0 no-repeat}
 
 .fold-link.open:before					{transform:rotate(90deg)}
+.foldable span.note						{line-height:15px;}
+.foldable span.note a 						{font-family:Arial;font-size:13px;color:#000000;}
 
 .success-block							{display:none;position:relative;border:1px dashed #787878;padding:34px;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;position:relative;text-align:center;margin-top:66px;}
 .success-block:before					{content:"";position:absolute;z-index:-1;top:0px;left:-1px;right:-1px;bottom:-2px;border:1px dashed #787878;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;}
