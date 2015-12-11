@@ -114,7 +114,11 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
         {
             if (MvcApplication.IsStubMode)
             {
-                return View(new OfferViewModel());
+                return View(CommonHelpers.GetOfferViewModel(new UserProfileViewModel{
+                    FirstName = "Иван",
+                    Soc = "03_ALLFY",
+                    MarketCode = "UFA"
+                }));
             }
             var userProfile = CommonHelpers.DecodeFromCookies(this.ControllerContext);
             OfferViewModel model = CommonHelpers.GetOfferViewModel(userProfile);
