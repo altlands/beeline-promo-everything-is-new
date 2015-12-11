@@ -1,193 +1,193 @@
 ﻿@model Promo.EverythingIsNew.WebApp.Models.OfferViewModel
 <!-- popup -->
 <div class="popup-cont">
-    <div class="popup-mask">&nbsp;</div>
-    <div class="popup wrong-email-popup">
-        <a href="javascript:void(0)" class="popup-close">&nbsp;</a>
-        <div class="popup-in">
-            <form id="form-resend">
-                <h4 class="thin">Укажите ваш действующий email<br>и мы отправим вам спецальный промо-код и инструкцию</h4>
-                <br>
-                <input type="text" id="resend_email" name="resend_email" class="inp" style="vertical-align:middle;width:300px;margin-right:22px" />
-                @*<a href="javascript:void(0)" class="btn-link" >Отправить</a>*@
-                <button class="btn-link">Отправить</button>
-            </form>
-        </div>
+  <div class="popup-mask">&nbsp;</div>
+  <div class="popup wrong-email-popup">
+    <a href="javascript:void(0)" class="popup-close">&nbsp;</a>
+    <div class="popup-in">
+      <form id="form-resend">
+        <h4 class="thin">Укажите ваш действующий email<br>и мы отправим вам спецальный промо-код и инструкцию</h4>
+        <br>
+        <input type="text" id="resend_email" name="resend_email" class="inp" style="vertical-align:middle;width:300px;margin-right:22px" />
+        @*<a href="javascript:void(0)" class="btn-link" >Отправить</a>*@
+        <button class="btn-link">Отправить</button>
+      </form>
     </div>
+  </div>
 </div>
 <!--/popup -->
 <div class="header">
-    <div class="header-wrap">
-        <h1>@Model.UserName!</h1>
-        Предлагаем вам персональный тариф
-    </div><!--header-wrap-->
+  <div class="header-wrap">
+    <h1>@Model.UserName!</h1>
+    Предлагаем вам персональный тариф
+  </div><!--header-wrap-->
 </div><!--header-->
 <div class="content">
-    <div class="content-wrap">
-        <h2>@Model.TariffName</h2>
-        <div class="large center" style="padding-bottom:25px">
-            Без абонентской платы
-        </div>
-        @*<div class="benefits">
-                <div class="entry">
-                    <div class="circle">
-                        <strong>50</strong> мин
-                    </div>
-                    Ежедневно 50&nbsp;минут<br>на&nbsp;все местные бесплатно
+  <div class="content-wrap">
+    <h2>@Model.TariffName</h2>
+    <div class="large center" style="padding-bottom:25px">
+      Без абонентской платы
+    </div>
+    @*<div class="benefits">
+          <div class="entry">
+              <div class="circle">
+                  <strong>50</strong> мин
+              </div>
+              Ежедневно 50&nbsp;минут<br>на&nbsp;все местные бесплатно
+          </div>
+
+          <div class="entry">
+              <div class="circle">
+                  <strong>50</strong> МБ
+              </div>
+              Ежедневно 50&nbsp;МБ<br>мобильного интернета бесплатно
+          </div>
+
+          <div class="entry">
+              <div class="circle">
+                  <strong>100</strong> SMS
+              </div>
+              Ежедневно 100 SMS<br>по&nbsp;всей России бесплатно
+          </div>
+      </div><!--benefits-->*@
+
+
+    @foreach (var group in Model.Groups)
+    {
+        <div class="fold-block">
+          <a class="fold-link open" href="javascript:void(0)">@group.Name</a>
+          <div class="foldable" style="display:block">
+            @foreach (var line in group.Lines)
+            {
+                <div class="row">
+                  @if (line.NumValue != null)
+                  {
+                      <div class="price"><span>@line.NumValue.Replace(",00", "")</span> @line.UnitDisplay</div>
+                  }
+                  @if (line.Value != null)
+                  {
+                      <div class="price">
+                        @Html.Raw(line.Value)
+                      </div>
+                  }
+                  <div class="desc">@Html.Raw(line.Title)</div>
                 </div>
-
-                <div class="entry">
-                    <div class="circle">
-                        <strong>50</strong> МБ
-                    </div>
-                    Ежедневно 50&nbsp;МБ<br>мобильного интернета бесплатно
-                </div>
-
-                <div class="entry">
-                    <div class="circle">
-                        <strong>100</strong> SMS
-                    </div>
-                    Ежедневно 100 SMS<br>по&nbsp;всей России бесплатно
-                </div>
-            </div><!--benefits-->*@
-
-
-        @foreach (var group in Model.Groups)
-        {
-            <div class="fold-block">
-                <a class="fold-link open" href="javascript:void(0)">@group.Name</a>
-                <div class="foldable" style="display:block">
-                    @foreach (var line in group.Lines)
-                    {
-                        <div class="row">
-                            @if (line.NumValue != null)
-                            {
-                                <div class="price"><span>@line.NumValue.Replace(",00", "")</span> @line.UnitDisplay</div>
-                            }
-                            @if (line.Value != null)
-                            {
-                                <div class="price">
-                                    @Html.Raw(line.Value)
-                                </div>
-                            }
-                            <div class="desc">@Html.Raw(line.Title)</div>
-                        </div>
-                    }
-                </div>
-            </div>
-        }
-
-        <div class="center offer-choice" style="padding-top:50px">
-            <a href="javascript:void(0)" class="btn-link"><strong>Воспользуюсь!</strong></a>
-            <a href="@MvcApplication.PersonalBeelineUrl" class="btn-link-alt">не интересно</a>
+            }
+          </div>
         </div>
+    }
 
-        <div class="success-block">
-            <div class="circle">
-                <div class="circle-in">&nbsp;</div>
-                <div class="circle-check">&nbsp;</div>
-            </div>
-            <div id="success-message" class="message">
-                Промо-код и инструкции по&nbsp;переходу на&nbsp;тариф отправлены на&nbsp;Ваш адрес<br><span class="message-email"></span>
-            </div>
-            <div>
-                <a href="javascript:void(0)" class="wrong-email">Это не ваш почтовый адрес?</a>
-            </div>
-        </div>
+    <div class="center offer-choice" style="padding-top:50px">
+      <a href="javascript:void(0)" class="btn-link"><strong>Воспользуюсь!</strong></a>
+      <a href="@MvcApplication.PersonalBeelineUrl" class="btn-link-alt">не интересно</a>
+    </div>
 
-        <div class="error-block">
-            <div style="">
-                <img src='~/i/feature_error.png' alt="service error" style="position:relative;width:76px;height:76px;margin: 0 auto 22px;" />
-            </div>
-            <div class="message">
-                Произошла ошибка сервиса, попробуйте повторить операцию позднее
-            </div>
-            <a href="javascript:void(0)" class="btn-link"><strong>Повторить</strong></a>
-        </div>
-    </div><!--content-wrap-->
+    <div class="success-block">
+      <div class="circle">
+        <div class="circle-in">&nbsp;</div>
+        <div class="circle-check">&nbsp;</div>
+      </div>
+      <div id="success-message" class="message">
+        Промо-код и инструкции по&nbsp;переходу на&nbsp;тариф отправлены на&nbsp;Ваш адрес<br><span class="message-email"></span>
+      </div>
+      <div>
+        <a href="javascript:void(0)" class="wrong-email">Это не ваш почтовый адрес?</a>
+      </div>
+    </div>
+
+    <div class="error-block">
+      <div style="">
+        <img src='~/i/feature_error.png' alt="service error" style="position:relative;width:76px;height:76px;margin: 0 auto 22px;" />
+      </div>
+      <div class="message">
+        Произошла ошибка сервиса, попробуйте повторить операцию позднее
+      </div>
+      <a href="javascript:void(0)" class="btn-link"><strong>Повторить</strong></a>
+    </div>
+  </div><!--content-wrap-->
 </div><!--content-->
 
 <script>
-    $(function () {
-        var choice = $(".offer-choice");
-        var success = $(".success-block");
-        var error = $(".error-block");
-        var popup = $(".popup-cont");
+  $(function () {
+    var choice = $(".offer-choice");
+    var success = $(".success-block");
+    var error = $(".error-block");
+    var popup = $(".popup-cont");
 
 
-        $(document).on("click", ".offer-choice .btn-link, .error-block .btn-link", send_email
-        );
+    $(document).on("click", ".offer-choice .btn-link, .error-block .btn-link", send_email
+    );
 
-        function send_email() {
-            hide_popup();
-            //console.log("click");
-            $.ajax({
-                type: "POST",
-                data: { email: $('#resend_email').val() },
-                url: "/offer",
-                context: document.body,
-                dataType: 'text',
-                success: function (data) {
-                    if (data.is_message_sent == false) {
-                        show_error_block();
-                    }
+    function send_email() {
+      hide_popup();
+      //console.log("click");
+      $.ajax({
+        type: "POST",
+        data: { email: $('#resend_email').val() },
+        url: "/offer",
+        context: document.body,
+        dataType: 'text',
+        success: function (data) {
+          if (data.is_message_sent == false) {
+            show_error_block();
+          }
 
-                    if (data.is_message_sent == true) {
-                        if (data.description) {
-                            $('#success-message').html(data.description);
-                            show_success_block();
-                        } else {
-                            if (!data.is_change_email_available) {
-                                // delete link to change email
-                            }
-                            $('.message-email').html(data.sended_on_email);
-                            show_success_block();
-                        }
-                    }
-                }
-            });
-        }
-
-        function show_success_block() {
-            error.hide();
-            choice.hide();
-            success.show();
-            setTimeout(function () {
-                success.addClass("show");
-            }, 100);
-        }
-
-        function show_error_block() {
-            success.hide();
-            choice.hide();
-            error.show();
-            setTimeout(function () {
-                error.addClass("show");
-            }, 100);
-        }
-
-        function hide_popup() {
-            popup.hide();
-        }
-
-        $("#form-resend").validate({
-            submitHandler: function (form) {
-                send_email()
-            },
-            rules: {
-
-                resend_email: {
-                    email: true,
-                    required: true
-                }
-            },
-            messages: {
-                resend_email: {
-                    email: "",
-                    required: ""
-                }
+          if (data.is_message_sent == true) {
+            if (data.description) {
+              $('#success-message').html(data.description);
+              show_success_block();
+            } else {
+              if (!data.is_change_email_available) {
+                // delete link to change email
+              }
+              $('.message-email').html(data.sended_on_email);
+              show_success_block();
             }
-        });
+          }
+        }
+      });
+    }
 
+    function show_success_block() {
+      error.hide();
+      choice.hide();
+      success.show();
+      setTimeout(function () {
+        success.addClass("show");
+      }, 100);
+    }
+
+    function show_error_block() {
+      success.hide();
+      choice.hide();
+      error.show();
+      setTimeout(function () {
+        error.addClass("show");
+      }, 100);
+    }
+
+    function hide_popup() {
+      popup.hide();
+    }
+
+    $("#form-resend").validate({
+      submitHandler: function (form) {
+        send_email()
+      },
+      rules: {
+
+        resend_email: {
+          email: true,
+          required: true
+        }
+      },
+      messages: {
+        resend_email: {
+          email: "",
+          required: ""
+        }
+      }
     });
+
+  });
 </script>
