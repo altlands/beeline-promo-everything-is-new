@@ -28,7 +28,7 @@ namespace Promo.EverythingIsNew.WebApp.Helpers
                 Title = l.Title,
                 NumValue = l.NumValue.ToString(),
                 UnitDisplay = (l.Unit != null) ? l.Unit.Display : null,
-                Value = l.Value.Replace("href=\"/", "href=\"/beeline.ru/"),
+                Value = l.Value == null ? null : l.Value.Replace("href=\"/", "href=\"/beeline.ru/"),
                 SortOrder = l.SortOrder
             };
         }
