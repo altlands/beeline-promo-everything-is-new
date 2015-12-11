@@ -47,6 +47,7 @@ namespace Promo.EverythingIsNew.WebApp
         public static bool VkStubMode = ConfigurationManager.AppSettings["VkStubMode"] == "true";
         public static bool IgnoreSsl = ConfigurationManager.AppSettings["IgnoreSsl"] == "true";
         public static bool IsRedirectForBeelineCtn = ConfigurationManager.AppSettings["IsRedirectForBeelineCtn"] == "true";
+        public static bool IsStubMode = ConfigurationManager.AppSettings["IsStubMode"] == "true";
 
         protected void Application_Start()
         {

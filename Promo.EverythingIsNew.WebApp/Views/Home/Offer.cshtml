@@ -26,10 +26,10 @@
     <div class="content-wrap">
         <h2>Тариф &laquo;#можноВСЁ&raquo;</h2>
         <div class="large center" style="padding-bottom:25px">
-          Без абонентской платы
+            Без абонентской платы
         </div>
-      
-      
+
+
 
         @*<div class="benefits">
                 <div class="entry">
@@ -53,7 +53,7 @@
                     Ежедневно 100 SMS<br>по&nbsp;всей России бесплатно
                 </div>
             </div><!--benefits-->*@
-        
+
 
         @foreach (var group in Model.Groups)
         {
@@ -65,7 +65,7 @@
                         <div class="row">
                             @if (line.NumValue != null)
                             {
-                                <div class="price"><span>@line.NumValue.Replace(",00","")</span> @line.UnitDisplay</div>
+                                <div class="price"><span>@line.NumValue.Replace(",00", "")</span> @line.UnitDisplay</div>
                             }
                             @if (line.Value != null)
                             {
@@ -88,7 +88,7 @@
                 <div class="circle-in">&nbsp;</div>
                 <div class="circle-check">&nbsp;</div>
             </div>
-            <div class="message">
+            <div id="success-message" class="message">
                 Промо-код и инструкции по&nbsp;переходу на&nbsp;тариф отправлены на&nbsp;Ваш адрес<br><span class="message-email"></span>
             </div>
 
@@ -127,16 +127,20 @@
                 url: "/offer",
                 context: document.body,
                 dataType: 'text',
-                statusCode: {
-                    400: function () {
-                        //console.log("400");
+                success: function (data) {
+                    if (data.is_message_sent == false) {
                         show_error_block();
                     }
-                },
-                success: function (msg) {
-                    $('.message-email').html(msg);
-                    show_success_block();
-                    //console.log("ok");
+
+                    if (data.is_message_sent == true) {
+                        if (data.description) {
+                            $('#success-message').html(data.description);
+                            show_success_block();
+                        } else {
+                            $('.message-email').html(data.sended_on_email);
+                            show_success_block();
+                        }
+                    }
                 }
             });
         }

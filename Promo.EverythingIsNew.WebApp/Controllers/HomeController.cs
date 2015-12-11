@@ -112,6 +112,10 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
 
         public ActionResult Offer()
         {
+            if (MvcApplication.IsStubMode)
+            {
+                return View(new OfferViewModel());
+            }
             var userProfile = CommonHelpers.DecodeFromCookies(this.ControllerContext);
             OfferViewModel model = CommonHelpers.GetOfferViewModel(userProfile);
 
@@ -120,22 +124,26 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
 
         [HttpPost]
         [ActionName("Offer")]
-        public async Task<ActionResult> OfferPost(string email)
+        public async Task<JsonResult> OfferPost(string email)
         {
+            if (MvcApplication.IsStubMode)
+            {
+                return Json(new Promo.EverythingIsNew.DAL.Cbn.Dto.MessageResult {
+                    is_message_sent = true,
+                    description = "description",
+                    is_change_email_available = true,
+                    sended_on_email = "email"
+                });
+            }
+
             var userProfile = CommonHelpers.DecodeFromCookies(this.ControllerContext);
             if (!string.IsNullOrEmpty(email))
             {
                 userProfile.Email = email;
             }
             var result = await MvcApplication.CbnClient.PostMessage(MappingHelpers.MapToMessage(userProfile));
-            if (result.is_message_sent == true)
-            {
-                return Content(userProfile.Email);
-            }
-            else
-            {
-                return new HttpStatusCodeResult(400);
-            }
+            result.sended_on_email = userProfile.Email;
+            return Json(result);
         }
     }
 }

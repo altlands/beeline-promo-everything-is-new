@@ -43,7 +43,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
                 CbnEvents.Log.TestCbnGetStatusResponse(response);
                 if (response.IsSuccessStatusCode)
                 {
-                    result = await response.Content.ReadAsAsync<StatusResult>(); 
+                    result = await response.Content.ReadAsAsync<StatusResult>();
                     CbnEvents.Log.TestCbnGetStatusFinished(result);
                 }
             }
@@ -52,19 +52,12 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
                 CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException("catch", e.InnerException));
             }
 
-
-
             //MainUssHandler h = new MainUssHandler();
             //UssApiClient cl = new UssApiClient(h);
-
 
             //var method = new CreateSsoRequestMethod(ussLogin, linkedAccountLogin, isInvite, nickName);
             //var response = await cl.ProcessRequestAsync(method);
             //return await method.ParseResponseAsync(response);
-
-
-            //
-
 
             //HttpMessageHandler handler = new MainUssHandler(delegatingHandler);
             //_httpClient = new HttpClient(handler);
@@ -106,6 +99,5 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
 
             return Content(JsonConvert.SerializeObject(result));
         }
-
     }
 }
