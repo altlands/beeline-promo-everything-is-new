@@ -90,7 +90,7 @@
       <div id="success-message" class="message">
         Промо-код и инструкции по&nbsp;переходу на&nbsp;тариф отправлены на&nbsp;Ваш адрес<br><span class="message-email"></span>
       </div>
-      <div>
+      <div id="is-change-email-available">
         <a href="javascript:void(0)" class="wrong-email">Это не ваш почтовый адрес?</a>
       </div>
     </div>
@@ -114,19 +114,15 @@
     var error = $(".error-block");
     var popup = $(".popup-cont");
 
-
     $(document).on("click", ".offer-choice .btn-link, .error-block .btn-link", send_email
     );
 
     function send_email() {
       hide_popup();
-      //console.log("click");
       $.ajax({
         type: "POST",
         data: { email: $('#resend_email').val() },
         url: "/offer",
-        context: document.body,
-        dataType: 'text',
         success: function (data) {
           if (data.is_message_sent == false) {
             show_error_block();
@@ -134,11 +130,12 @@
 
           if (data.is_message_sent == true) {
             if (data.description) {
+              $("#is-change-email-available").html("");
               $('#success-message').html(data.description);
               show_success_block();
             } else {
               if (!data.is_change_email_available) {
-                // delete link to change email
+                $("#is-change-email-available").html("");
               }
               $('.message-email').html(data.sended_on_email);
               show_success_block();
