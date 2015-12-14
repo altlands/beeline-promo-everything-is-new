@@ -79,11 +79,11 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             };
 
             CbnEvents.Log.CbnUpdateStarted(update);
-            string request = null;
+            //string request = null;
             HttpResponseMessage response = null;
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(MvcApplication.CbnUrl);
-            string json;
+            //string json;
 
 
             client.DefaultRequestHeaders.ExpectContinue = false;
