@@ -85,6 +85,7 @@ namespace Promo.EverythingIsNew.WebApp.Helpers
                 ctn = userProfile.CTN,
                 uid = userProfile.Uid,
                 email = userProfile.Email,
+                market = userProfile.MarketCode
             };
         }
     }
