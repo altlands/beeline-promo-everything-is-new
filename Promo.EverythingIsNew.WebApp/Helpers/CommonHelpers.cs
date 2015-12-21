@@ -40,7 +40,7 @@ namespace Promo.EverythingIsNew.WebApp.Helpers
             return null;
         }
 
-       
+
 
         internal static async Task<UpdateResult> SendUserProfileToCbn(UserProfileViewModel userProfile)
         {
@@ -60,22 +60,27 @@ namespace Promo.EverythingIsNew.WebApp.Helpers
 
         public static OfferViewModel GetOfferViewModel(UserProfileViewModel userProfile)
         {
+            OfferViewModel model = new OfferViewModel();
             List<TariffGroupViewModel> groups = new List<TariffGroupViewModel>();
             var targetTarif = DcpClient.GetTariff(MvcApplication.dcpConnectionString, userProfile.Soc, userProfile.MarketCode);
+
 
             if (targetTarif != null)
             {
                 groups = targetTarif.DpcProduct.Parameters
                         .GroupBy(g => g.Group.Id, (id, lines) => MappingHelpers.MapTariffGroup(id, lines))
                         .OrderBy(s => s.SortOrder).ToList();
-            }
 
-            var model = new OfferViewModel
-            {
-                UserName = userProfile.FirstName,
-                TariffName = targetTarif.DpcProduct.MarketingProduct.Title,
-                Groups = groups
-            };
+                model = new OfferViewModel
+                {
+                    UserName = userProfile.FirstName,
+                    Groups = groups
+                };
+                if (targetTarif.DpcProduct != null && targetTarif.DpcProduct.MarketingProduct != null)
+                {
+                    model.TariffName = targetTarif.DpcProduct.MarketingProduct.Title;
+                }
+            }
             return model;
         }
 
