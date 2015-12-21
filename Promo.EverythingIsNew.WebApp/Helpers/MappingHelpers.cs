@@ -25,7 +25,7 @@ namespace Promo.EverythingIsNew.WebApp.Helpers
         {
             return new TariffLineViewModel
             {
-                Title = l.Title,
+                Title = l.Title == null ? null : l.Title.Replace("href=\"/", "href=\"https://beeline.ru/"),
                 NumValue = l.NumValue.ToString(),
                 UnitDisplay = (l.Unit != null) ? l.Unit.Display : null,
                 Value = l.Value == null ? null : l.Value.Replace("href=\"/", "href=\"https://beeline.ru/"),
