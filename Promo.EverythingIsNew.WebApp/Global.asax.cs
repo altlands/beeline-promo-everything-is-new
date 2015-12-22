@@ -48,6 +48,8 @@ namespace Promo.EverythingIsNew.WebApp
         public static bool IgnoreSsl = ConfigurationManager.AppSettings["IgnoreSsl"] == "true";
         public static bool IsRedirectForBeelineCtn = ConfigurationManager.AppSettings["IsRedirectForBeelineCtn"] == "true";
         public static bool IsStubMode = ConfigurationManager.AppSettings["IsStubMode"] == "true";
+        public static string EndActionDate = ConfigurationManager.AppSettings["EndActionDate"];
+        
 
         protected void Application_Start()
         {
