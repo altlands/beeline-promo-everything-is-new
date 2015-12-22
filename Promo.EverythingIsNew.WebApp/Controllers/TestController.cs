@@ -49,7 +49,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             }
             catch (Exception e)
             {
-                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException("catch", e.InnerException));
+                ErrorEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException("catch", e.InnerException));
             }
 
             //MainUssHandler h = new MainUssHandler();
@@ -113,7 +113,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             }
             catch (Exception e)
             {
-                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response != null ? response.ToString() : "response = null", e.InnerException));
+                ErrorEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response != null ? response.ToString() : "response = null", e.InnerException));
 
 
                 return Json(result, JsonRequestBehavior.AllowGet);

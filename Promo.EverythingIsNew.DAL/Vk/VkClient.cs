@@ -40,7 +40,7 @@ namespace Promo.EverythingIsNew.DAL.Vk
                 }
                 catch (Exception e)
                 {
-                    VkEvents.Log.GeneralExceptionError(urlToGetAccessData, e);
+                    ErrorEvents.Log.GeneralExceptionError(urlToGetAccessData, e);
                     throw;
                 }
 
@@ -62,7 +62,7 @@ namespace Promo.EverythingIsNew.DAL.Vk
                 }
                 catch (Exception e)
                 {
-                    VkEvents.Log.GeneralExceptionError(urlToGetInfo, e);
+                    ErrorEvents.Log.GeneralExceptionError(urlToGetInfo, e);
                     throw;
                 }
             }

@@ -69,6 +69,14 @@ namespace Promo.EverythingIsNew.WebApp
             cbnObservable.EnableEvents(CbnEvents.LogEventSource, EventLevel.Verbose, (EventKeywords)(-1));
             cbnObservable.LogToCategory("cbn");
 
+            var dpcObservable = new ObservableEventListener();
+            cbnObservable.EnableEvents(DpcEvents.LogEventSource, EventLevel.Verbose, (EventKeywords)(-1));
+            cbnObservable.LogToCategory("dpc");
+
+            var errorObservable = new ObservableEventListener();
+            cbnObservable.EnableEvents(ErrorEvents.LogEventSource, EventLevel.Verbose, (EventKeywords)(-1));
+            cbnObservable.LogToCategory("err");
+
             if (IgnoreSsl)
             {
                 ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;

@@ -8,12 +8,6 @@ namespace Promo.EverythingIsNew.DAL.Events
 {
     public interface IVkEvents
     {
-        [Event(500, Level = EventLevel.Error, Message = "Error during service call")]
-        void GeneralError(Exception e);
-
-        [Event(1, Level = EventLevel.Error, Message = "Error during VK Api call")]
-        void GeneralExceptionError(string url, Exception e);
-
         [Event(2, Level = EventLevel.Informational, Message = "Getting access data started")]
         void GetAccessDataStarted(string code, string vkAppId, string vkAppSecretKey, string redirectUri);
         [Event(3, Level = EventLevel.Informational, Message = "Getting access data finished")]

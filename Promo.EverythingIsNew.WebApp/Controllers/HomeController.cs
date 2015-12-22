@@ -31,7 +31,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             }
             catch (Exception e)
             {
-                VkEvents.Log.GeneralExceptionError(urlToGetCode, e);
+                ErrorEvents.Log.GeneralExceptionError(urlToGetCode, e);
                 throw;
             }
         }
@@ -59,7 +59,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             }
             catch (Exception e)
             {
-                VkEvents.Log.GeneralError(e);
+                ErrorEvents.Log.GeneralError(e);
                 throw;
             }
         }

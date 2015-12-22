@@ -7,9 +7,6 @@ namespace Promo.EverythingIsNew.DAL.Events
 {
     public interface ICbnEvents
     {
-        [Event(1, Level = EventLevel.Error, Message = "Error while using Cbn Client")]
-        void CbnGeneralExceptionError(string method, CbnException response);
-
         [Event(2, Level = EventLevel.Informational, Message = "Cbn getting status started")]
         void CbnGetStatusStarted(Status status);
 

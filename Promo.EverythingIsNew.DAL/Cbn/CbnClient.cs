@@ -51,7 +51,7 @@ namespace Promo.EverythingIsNew.DAL.Cbn
             }
             catch (Exception e)
             {
-                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response != null ? response.ToString() : "response = null", e.InnerException));
+                ErrorEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response != null ? response.ToString() : "response = null", e.InnerException));
                 throw;
             }
             return null;
@@ -74,7 +74,7 @@ namespace Promo.EverythingIsNew.DAL.Cbn
             }
             catch (Exception e)
             {
-                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response != null ? response.ToString() : "response = null", e.InnerException));
+                ErrorEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response != null ? response.ToString() : "response = null", e.InnerException));
                 throw;
             }
             return null;
@@ -103,7 +103,7 @@ namespace Promo.EverythingIsNew.DAL.Cbn
             }
             catch (Exception e)
             {
-                CbnEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response != null ? response.ToString() : "response = null", e.InnerException));
+                ErrorEvents.Log.CbnGeneralExceptionError(MethodBase.GetCurrentMethod().Name, new CbnException(response != null ? response.ToString() : "response = null", e.InnerException));
                 throw;
             }
             return null;
