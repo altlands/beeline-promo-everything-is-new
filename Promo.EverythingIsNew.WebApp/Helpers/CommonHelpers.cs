@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using AltLanDS.Beeline.DpcProxy.Client.Domain;
+using Newtonsoft.Json;
 using Promo.EverythingIsNew.DAL.Cbn.Dto;
 using Promo.EverythingIsNew.DAL.Dcp;
+using Promo.EverythingIsNew.DAL.Events;
 using Promo.EverythingIsNew.WebApp.Models;
 using System;
 using System.Collections.Generic;
@@ -62,8 +64,18 @@ namespace Promo.EverythingIsNew.WebApp.Helpers
         {
             OfferViewModel model = new OfferViewModel();
             List<TariffGroupViewModel> groups = new List<TariffGroupViewModel>();
-            var targetTarif = DcpClient.GetTariff(MvcApplication.dcpConnectionString, userProfile.Soc, userProfile.MarketCode);
+            MobileTariff targetTarif;
 
+            try
+            {
+                targetTarif = DcpClient.GetTariff(MvcApplication.dcpConnectionString, userProfile.Soc, userProfile.MarketCode);
+            }
+            catch (Exception e)
+            {
+                ErrorEvents.Log.DpcConnectionGeneralExceptionError(e);
+                throw;
+            }
+            
 
             if (targetTarif != null)
             {
@@ -80,6 +92,10 @@ namespace Promo.EverythingIsNew.WebApp.Helpers
                 {
                     model.TariffName = targetTarif.DpcProduct.MarketingProduct.Title;
                 }
+            }
+            else
+            {
+                ErrorEvents.Log.DpcTafirrNotFoundError();
             }
             return model;
         }

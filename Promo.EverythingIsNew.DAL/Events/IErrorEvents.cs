@@ -12,10 +12,10 @@ namespace Promo.EverythingIsNew.DAL.Events
         void CbnGeneralExceptionError(string method, CbnException response);
 
         [Event(1, Level = EventLevel.Error, Message = "Error during DPC call")]
-        void DpcGeneralExceptionError(string url, Exception e);
+        void DpcConnectionGeneralExceptionError(Exception e);
 
         [Event(1, Level = EventLevel.Error, Message = "Tariff not found")]
-        void DpcTafirrNotFoundError(string url, Exception e);
+        void DpcTafirrNotFoundError();
         [Event(500, Level = EventLevel.Error, Message = "Error during service call")]
         void GeneralError(Exception e);
 
