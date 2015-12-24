@@ -31,7 +31,7 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             }
             catch (Exception e)
             {
-                ErrorEvents.Log.GeneralExceptionError(urlToGetCode, e);
+                ErrorEvents.Log.VkGeneralExceptionError(urlToGetCode, e);
                 throw;
             }
         }

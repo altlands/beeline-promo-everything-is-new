@@ -70,17 +70,32 @@ namespace Promo.EverythingIsNew.WebApp
             cbnObservable.LogToCategory("cbn");
 
             var dpcObservable = new ObservableEventListener();
-            cbnObservable.EnableEvents(DpcEvents.LogEventSource, EventLevel.Verbose, (EventKeywords)(-1));
-            cbnObservable.LogToCategory("dpc");
+            dpcObservable.EnableEvents(DpcEvents.LogEventSource, EventLevel.Verbose, (EventKeywords)(-1));
+            dpcObservable.LogToCategory("dpc");
 
             var errorObservable = new ObservableEventListener();
-            cbnObservable.EnableEvents(ErrorEvents.LogEventSource, EventLevel.Verbose, (EventKeywords)(-1));
-            cbnObservable.LogToCategory("err");
+            errorObservable.EnableEvents(ErrorEvents.LogEventSource, EventLevel.Verbose, (EventKeywords)(-1));
+            errorObservable.LogToCategory("err");
 
             if (IgnoreSsl)
             {
                 ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             }
+        }
+
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        {
+            filters.Add(new HandleErrorAttribute());
+        }
+
+        void Application_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            ErrorEvents.Log.GeneralError(exc);
+            Response.Write("<h2>Ошибка</h2>");
+            //Response.Write("<p>" + exc.Message + "</p>\n");
+            Response.Write("Вернуться на <a href='/'>Главную страницу</a>");
+            Server.ClearError();
         }
     }
 }
