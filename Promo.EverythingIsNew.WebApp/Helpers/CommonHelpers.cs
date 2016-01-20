@@ -54,7 +54,7 @@ namespace Promo.EverythingIsNew.WebApp.Helpers
             else
             {
                 var ctnOnlyUserProfile = new UserProfileViewModel { CTN = userProfile.CTN };
-                result = await MvcApplication.CbnClient.Update(MappingHelpers.MapToUpdate(userProfile));
+                result = await MvcApplication.CbnClient.Update(MappingHelpers.MapToUpdate(ctnOnlyUserProfile));
             }
 
             return result;
