@@ -1,5 +1,360 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model Promo.EverythingIsNew.WebApp.Models.UserProfileViewModel
+@{
+    var cities = Promo.EverythingIsNew.WebApp.Helpers.ViewHelpers.SplitByColumns<string>(ViewBag.Cities, 3);
+    var years = Promo.EverythingIsNew.WebApp.Helpers.ViewHelpers.SplitByColumns<int>(Enumerable.Range(1915, DateTime.Now.Year - 10 - 1915).OrderByDescending(x => x).ToList(), 5);
+    var months = Promo.EverythingIsNew.WebApp.Helpers.ViewHelpers.SplitByColumns<int>(Enumerable.Range(1, 12).ToList(), 3);
+    var days = Promo.EverythingIsNew.WebApp.Helpers.ViewHelpers.SplitByColumns<int>(Enumerable.Range(1, 31).ToList(), 4);
+
 }
-<br />
-@Html.ActionLink("Sample", "Login", "WorkflowSample")
+<div class="header">
+  <div class="header-wrap">
+    <h1>@Model.FirstName!</h1>
+    Предлагаем Вам персональный тариф. <br>
+    Стать участником акции можно только на этой странице. <br>
+    Страница будет доступна вам до @MvcApplication.EndActionDate
+  </div><!--header-wrap-->
+</div><!--header-->
+<div class="content">
+  <div class="content-wrap">
+    <div class="slim-form">
+      <h2>Заполните, чтобы получить предложение</h2>
+      <div class="vk-fill">
+        Проверьте, все ли данные мы определили верно из&nbsp;вашего профиля&nbsp;Вконтакте
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+      </div>
+      <form id="form-index" method="post">
+        <div class="form-line">
+          <label for="first_name_field">Имя</label>
+          <div class="field">
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "inp" } })
+          </div>
+        </div>
+
+        <div class="form-line">
+          <label for="last_name_field">Фамилия</label>
+          <div class="field">
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "inp" } })
+          </div>
+        </div>
+        <div class="form-line">
+          <label for="phone_field">Номер телефона</label>
+          <div class="field">
+            <div class="prefix">+7</div>
+            @Html.EditorFor(model => model.CTN, new { htmlAttributes = new { @class = "inp phone" } })
+            <div class="hint phone-hint">
+              Номер телефона, которым вы пользуетесь.<br>
+              Номер может принадлежать сети любого российского<br>
+              оператора: Билайн, МТС, Мегафон, Теле2, Yota и пр.
+            </div>
+          </div>
+        </div>
+        <div class="form-line">
+          <label for="email_name_field">E-mail</label>
+          <div class="field">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "inp" } })
+          </div>
+        </div>
+
+        <div class="form-line" style="float:left;z-index:100">
+          <label for="birthday_field">Дата рождения</label>
+          <div class="field" style="width:100px">
+            <table>
+              <tr>
+                <td>
+                  <div class="text-select text-select-day" style="width:100px;">
+                    <div class="inp option-selected option-selected-day" style="width:28px !important;z-index:101">@Model.Day</div>
+                    <input type="hidden" name="day" id="day" value="@Model.Day" style="width:100px" />
+                    <div id="select-list-day" class="select-day text-select-list-day" style="z-index:100">
+                      @foreach (var dayBatch in days)
+                      {
+                          <div class="select-day-col">
+                            @foreach (var day in dayBatch)
+                            {
+                                <div class="entry option-day">@day</div>
+                            }
+                          </div>
+                      }
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-select text-select-month" style="width:100px;float:left;">
+                    <div class="inp option-selected option-selected-month" style="width:28px !important;z-index:101">@Model.Month</div>
+                    <input type="hidden" name="month" id="month" value="@Model.Month" />
+                    <div id="select-list-month" class="select-month text-select-list-month" style="z-index:100">
+                      @foreach (var monthBatch in months)
+                      {
+                          <div class="select-month-col">
+                            @foreach (var month in monthBatch)
+                            {
+                                <div class="entry option-month">@month</div>
+                            }
+                          </div>
+                      }
+                    </div>
+                  </div>
+                </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td>
+                  <div class="text-select text-select-year" style="width:128px;float:left;">
+                    <div class="inp option-selected option-selected-year" style="width:58px !important;z-index:101">@Math.Max(Model.Year, 1915)</div>
+                    <input type="hidden" name="year" id="year" value="@Math.Max(Model.Year, 1915)" />
+                    <div id="select-list-year" class="select-year text-select-list-year" style="z-index:100">
+                      @foreach (var yearBatch in years)
+                      {
+                          <div class="select-year-col">
+                            @foreach (var year in yearBatch)
+                            {
+                                <div class="entry option-year">@year</div>
+                            }
+                          </div>
+                      }
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <br>
+        <div class="form-line">
+          <label for="place_field">Город</label>
+          <div class="field">
+            <div class="text-select text-select-city">
+              <div class="inp option-selected option-selected-city">@ViewBag.SelectedCity</div>
+              <input type="hidden" name="SelectMyCity" id="SelectMyCity" value="@ViewBag.SelectedCity" />
+              <div class="hint">Город или ближайший областной центр, в котором живете</div>
+              <div class="text-select-list-city select-city">
+                @foreach (var cityBatch in cities)
+                {
+                    <div class="select-city-col">
+                      @foreach (var city in cityBatch)
+                      {
+                          <div class="entry option-city">@city</div>
+                      }
+                    </div>
+                }
+                @*<div class="option option-city">city</div>*@
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+
+        <div class="form-line">
+          <div class="checkbox">
+            @Html.CheckBoxFor(model => model.IsPersonalDataAgree)
+            <span>Разрешаю использовать публичные данные моего профиля Вконтакте</span>
+            <div class="hint">мы не будем передавать данные третьим лицам и&nbsp;использовать профиль для&nbsp;публикации постов</div>
+          </div>
+        </div>
+
+        <div class="form-line">
+          <div class="checkbox">
+            @Html.CheckBoxFor(model => model.IsMailingAgree)
+            <span>Хочу получать по e-mail информацию о скидках, акциях и&nbsp;новых продуктах Билайн</span>
+          </div>
+        </div>
+        <br>
+
+        <div class="form-line center" style="width:538px">
+          <button id="submit-index" class="btn-link">Посмотреть предложение</button>
+        </div>
+
+      </form>
+    </div><!--slim-form-->
+  </div><!--content-wrap-->
+</div><!--content-->
+
+<script>
+  $(function () {
+
+    // cities dropdown
+    {
+      var dropdown_city = $(".text-select-list-city");
+      var options_city = $('.option-city');
+      var selected_city = $('.option-selected-city');
+      var hidden_city = $('#SelectMyCity');
+
+      options_city.hide();
+      dropdown_city.hide();
+      selected_city.show();
+
+      selected_city.click(function () {
+        dropdown_city.show();
+        options_city.show();
+      });
+
+      options_city.click(function () {
+        var innerHtml = $(this).html();
+        dropdown_city.hide();
+        selected_city.html(innerHtml);
+        hidden_city.val(innerHtml);
+      });
+    }
+
+    // days dropdown
+    {
+      var dropdown_day = $(".text-select-list-day");
+      var options_day = $('.option-day');
+      var selected_day = $('.option-selected-day');
+      var hidden_day = $('#day');
+
+      options_day.hide();
+      dropdown_day.hide();
+      //selected_day.show();
+
+      selected_day.click(function () {
+        dropdown_day.show();
+        //options_day.show();
+      });
+
+      $(document).on("click", ".option-day", function () {
+        var innerHtml = $(this).html();
+        dropdown_day.hide();
+        selected_day.html(innerHtml);
+        hidden_day.val(innerHtml);
+      });
+    }
+
+    // months dropdown
+    {
+      var dropdown_month = $(".text-select-list-month");
+      var options_month = $('.option-month');
+      var selected_month = $('.option-selected-month');
+      var hidden_month = $('#month');
+
+      options_month.hide();
+      dropdown_month.hide();
+      selected_month.show();
+
+      selected_month.click(function () {
+        dropdown_month.show();
+        options_month.show();
+      });
+
+      $(document).on("click", ".option-month", function () {
+        var innerHtml = $(this).html();
+        dropdown_month.hide();
+        selected_month.html(innerHtml);
+        hidden_month.val(innerHtml);
+        updateNumberOfDays();
+      });
+    }
+
+    // years dropdown
+    {
+      var dropdown_year = $(".text-select-list-year");
+      var options_year = $('.option-year');
+      var selected_year = $('.option-selected-year');
+      var hidden_year = $('#year');
+
+      options_year.hide();
+      dropdown_year.hide();
+      selected_year.show();
+
+      selected_year.click(function () {
+        dropdown_year.show();
+        options_year.show();
+      });
+
+      $(document).on("click", ".option-year", function () {
+        var innerHtml = $(this).html();
+        dropdown_year.hide();
+        selected_year.html(innerHtml);
+        hidden_year.val(innerHtml);
+        updateNumberOfDays();
+      });
+    }
+
+    /* close dropdowns on click in empty space around */
+    $(document).mouseup(function (e) {
+      if (!dropdown_city.is(e.target)
+          && dropdown_city.has(e.target).length === 0) {
+        dropdown_city.hide();
+      }
+
+      if (!dropdown_day.is(e.target)
+          && dropdown_day.has(e.target).length === 0) {
+        dropdown_day.hide();
+      }
+
+      if (!dropdown_month.is(e.target)
+          && dropdown_month.has(e.target).length === 0) {
+        dropdown_month.hide();
+      }
+
+      if (!dropdown_year.is(e.target)
+          && dropdown_year.has(e.target).length === 0) {
+        dropdown_year.hide();
+      }
+    });
+
+    /* validation */
+    $("#form-index").validate({
+      rules: {
+        CTN: {
+          required: true,
+          minlength: 10,
+          maxlength: 10,
+          digits: true
+        },
+        Email: {
+          email: true,
+          required: true,
+        },
+        FirstName: {
+          maxlength: 100
+        },
+        LastName: {
+          maxlength: 100
+        }
+      },
+      messages: {
+        CTN: {
+          required: "",
+          minlength: "",
+          maxlength: "",
+          digits: "",
+        },
+        Email: {
+          email: "",
+          required: "",
+        },
+        FirstName: {
+          maxlength: ""
+        },
+        LastName: {
+          maxlength: ""
+        }
+      }
+    });
+
+
+    function updateNumberOfDays() {
+      month = $('#month').val();
+      year = $('#year').val();
+      days = daysInMonth(month, year);
+      if (hidden_day.val() > days) {
+        selected_day.html('1');
+        hidden_day.val('1');
+      }
+
+      options_day.each(function (index, element) {
+        if (index + 1 > days) {
+          $(element).hide();
+
+        }
+        else {
+          $(element).show();
+        }
+      });
+    }
+
+    function daysInMonth(month, year) {
+      return new Date(year, month, 0).getDate();
+    }
+
+    updateNumberOfDays();
+  });
+</script>

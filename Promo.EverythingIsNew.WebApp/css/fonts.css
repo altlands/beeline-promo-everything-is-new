@@ -1,0 +1,32 @@
+	@font-face {
+    font-family: 'officinaserifcbold';
+    src: url('../fonts/officinaserifc-bold-webfont.eot');
+    src: url('../fonts/officinaserifc-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/officinaserifc-bold-webfont.woff') format('woff'),
+         url('../fonts/officinaserifc-bold-webfont.ttf') format('truetype'),
+         url('../fonts/officinaserifc-bold-webfont.svg#officinaserifcbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+	}
+
+	@font-face {
+    font-family: 'officinaserifcregular';
+    src: url('../fonts/officinaserifc-book-webfont.eot');
+    src: url('../fonts/officinaserifc-book-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/officinaserifc-book-webfont.woff') format('woff'),
+         url('../fonts/officinaserifc-book-webfont.ttf') format('truetype'),
+         url('../fonts/officinaserifc-book-webfont.svg#officinaserifcregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+	}
+
+.officina, h1,h2,h3,h4,h5				{font-family: 'officinaserifcregular';color:#282828;line-height:1.2;font-weight:normal}
+.officina strong, h1 strong,
+	h2 strong, h3 strong,
+	h4 strong, h5 strong				{font-family: 'officinaserifcbold';font-weight:normal}
+
+h1									{font-size: 41px}
+h2									{font-size: 31px}
+h3									{font-size: 21px}
+h4									{font-size: 17px}
+h5									{font-size: 15px}

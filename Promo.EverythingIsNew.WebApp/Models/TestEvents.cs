@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.Linq;
-using System.Web;
+﻿using System.Diagnostics.Tracing;
 
 namespace Promo.EverythingIsNew.WebApp.Models
 {

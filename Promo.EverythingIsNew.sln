@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promo.EverythingIsNew.WebApp", "Promo.EverythingIsNew.WebApp\Promo.EverythingIsNew.WebApp.csproj", "{E5CE314C-17AA-4DF4-9AC8-9DBA2D0C43B5}"
 EndProject
@@ -9,23 +9,30 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promo.EverythingIsNew.WebAp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8946ABD0-4CFC-485A-A5FA-E89D5A40D5C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promo.EverythingIsNew.Domain", "Promo.EverythingIsNew.Domain\Promo.EverythingIsNew.Domain.csproj", "{96764198-4087-4553-9949-B914D8D738E0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promo.EverythingIsNew.DAL", "Promo.EverythingIsNew.DAL\Promo.EverythingIsNew.DAL.csproj", "{E33F332B-92DA-480D-A102-CC09A1828D52}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "buildtools", "buildtools", "{053723B8-87FB-43FB-85FD-B52B9E960E17}"
 	ProjectSection(SolutionItems) = preProject
+		buildtools\build-template.fsx = buildtools\build-template.fsx
 		buildtools\build.fsx = buildtools\build.fsx
 		buildtools\build.ps1 = buildtools\build.ps1
 		buildtools\buildtools_version.txt = buildtools\buildtools_version.txt
 		buildtools\common-targets.fsx = buildtools\common-targets.fsx
 		buildtools\commontargets.fsx = buildtools\commontargets.fsx
+		buildtools\localbuild-template.bat = buildtools\localbuild-template.bat
 		buildtools\localbuild.bat = buildtools\localbuild.bat
 		buildtools\localpublish.pubxml = buildtools\localpublish.pubxml
 		buildtools\Nuget.Config = buildtools\Nuget.Config
 		buildtools\Nuget.exe = buildtools\Nuget.exe
 		buildtools\releaseToOctopus.bat = buildtools\releaseToOctopus.bat
 		buildtools\releaseToOctopus.fsx = buildtools\releaseToOctopus.fsx
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promo.ConsoleTest", "Promo.ConsoleTest\Promo.ConsoleTest.csproj", "{885131FD-4B3A-4CD6-BC04-3A6F79E3EDD4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{84C70AF6-D062-4A26-A020-98D56B1C80E0}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
 Global
@@ -42,19 +49,23 @@ Global
 		{35BA378E-7472-4BFD-A88C-DD5B84C6E5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35BA378E-7472-4BFD-A88C-DD5B84C6E5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35BA378E-7472-4BFD-A88C-DD5B84C6E5EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{96764198-4087-4553-9949-B914D8D738E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96764198-4087-4553-9949-B914D8D738E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96764198-4087-4553-9949-B914D8D738E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96764198-4087-4553-9949-B914D8D738E0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E33F332B-92DA-480D-A102-CC09A1828D52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E33F332B-92DA-480D-A102-CC09A1828D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E33F332B-92DA-480D-A102-CC09A1828D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E33F332B-92DA-480D-A102-CC09A1828D52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{885131FD-4B3A-4CD6-BC04-3A6F79E3EDD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{885131FD-4B3A-4CD6-BC04-3A6F79E3EDD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{885131FD-4B3A-4CD6-BC04-3A6F79E3EDD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{885131FD-4B3A-4CD6-BC04-3A6F79E3EDD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{35BA378E-7472-4BFD-A88C-DD5B84C6E5EA} = {8946ABD0-4CFC-485A-A5FA-E89D5A40D5C3}
+		{885131FD-4B3A-4CD6-BC04-3A6F79E3EDD4} = {8946ABD0-4CFC-485A-A5FA-E89D5A40D5C3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.Interception.2.1.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal
