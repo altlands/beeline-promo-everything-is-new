@@ -100,6 +100,12 @@ namespace Promo.EverythingIsNew.WebApp.Controllers
             // return index page if ModelState is not valid
 
             var statusResult = await MvcApplication.CbnClient.GetStatus(MappingHelpers.MapToStatus(userProfile));
+
+            if (MvcApplication.IsStubMode)
+            {
+                statusResult.is_beeline_subscriber = false;
+            }
+
             result = RedirectHelpers.RedirectOnCtnAndUidAlreadyUsed(statusResult, result);
 
             result = RedirectHelpers.RedirectOnBeelineCtn(statusResult, result);
